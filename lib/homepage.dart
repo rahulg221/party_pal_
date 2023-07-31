@@ -185,8 +185,11 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       ? Colors.black
                       : Colors.white,
                 ),
-                label: Text('Beer',
-                    style: Theme.of(context).textTheme.displaySmall),
+                label: FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Text('Beer',
+                      style: Theme.of(context).textTheme.displaySmall),
+                ),
               ),
             ),
           ),
@@ -219,8 +222,11 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       ? Colors.black
                       : Colors.white,
                 ),
-                label: Text('Liquor',
-                    style: Theme.of(context).textTheme.displaySmall),
+                label: FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Text('Liquor',
+                      style: Theme.of(context).textTheme.displaySmall),
+                ),
               ),
             ),
           ),
@@ -259,21 +265,26 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       ? Colors.black
                       : Colors.white,
                 ),
-                label: Text('Wine',
-                    style: Theme.of(context).textTheme.displaySmall),
+                label: FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Text('Wine',
+                      style: Theme.of(context).textTheme.displaySmall),
+                ),
               ),
             ),
           ),
         ],
       );
 
-  Widget _countDisplay(double count, Color color, double bacRatio) => Stack(
+  Widget _countDisplay(double count, Color color, double bacRatio, double width,
+          double height) =>
+      Stack(
         alignment: const Alignment(0.6, 0.6),
         children: [
           Ring(
             percent: (bacRatio * 100) > 0 ? (bacRatio * 100) : 0,
             color: RingColorScheme(ringColor: color),
-            radius: 120,
+            radius: width * 0.3,
             width: 15,
             child: GestureDetector(
               onTap: () {
@@ -289,18 +300,34 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                           20.0), // Adjust the top right corner radius here
                     ),
                   ),
-                  content: Text(
-                      'You have consumed ${count.toStringAsFixed(1)} standard drinks.\n\nA standard drink is equivalent to:\n\n-12 ounces of beer at 5% ABV\n\n-5 ounces of wine at 12% ABV\n\n-1.5 oz of hard liquor at 40% ABV',
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold)),
+                  content: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: IconButton(
+                          icon: Icon(Icons.close),
+                          onPressed: () {
+                            // Close the SnackBar when the close button is pressed
+                            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                          },
+                          color: Colors.black,
+                        ),
+                      ),
+                      Text(
+                          'You have consumed ${count.toStringAsFixed(1)} standard drinks.\n\nA standard drink is equivalent to:\n\n-12 ounces of beer at 5% ABV\n\n-5 ounces of wine at 12% ABV\n\n-1.5 oz of hard liquor at 40% ABV',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold)),
+                    ],
+                  ),
                   backgroundColor: ref.watch(colorController),
                 );
 
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
               },
               child: Container(
-                width: 225,
-                height: 225,
+                width: width * 0.3 * 2,
+                height: width * 0.3 * 2,
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
@@ -750,8 +777,12 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 SizedBox(height: 80),
-                _countDisplay(count, color,
-                    findRatio(recLevel, bac, legalLimit, tolerance)),
+                _countDisplay(
+                    count,
+                    color,
+                    findRatio(recLevel, bac, legalLimit, tolerance),
+                    width,
+                    height),
                 Expanded(child: SizedBox()),
                 _drinkSelector(),
                 SizedBox(height: 6),

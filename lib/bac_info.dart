@@ -106,9 +106,12 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
                 SizedBox(height: 15),
                 Align(
                   alignment: Alignment.bottomLeft,
-                  child: Text(
-                    '${bac.toStringAsFixed(3)}%',
-                    style: Theme.of(context).textTheme.headlineLarge,
+                  child: FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Text(
+                      '${bac.toStringAsFixed(3)}%',
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
                   ),
                 ),
               ],

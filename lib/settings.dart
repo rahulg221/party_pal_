@@ -92,7 +92,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
               },
               child: Text('Male',
                   style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 18,
                       color: MyApp.themeNotifier.value == ThemeMode.light
                           ? Colors.black
                           : ref.read(genderController) == 0.68
@@ -126,7 +126,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
               },
               child: Text('Female',
                   style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 18,
                       color: MyApp.themeNotifier.value == ThemeMode.light
                           ? Colors.black
                           : ref.read(genderController) == 0.55
@@ -162,14 +162,16 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
               onPressed: () {
                 ref.read(unitController.notifier).setUnit(2);
               },
-              child: Text('Imperial (oz/lbs)',
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: MyApp.themeNotifier.value == ThemeMode.light
-                          ? Colors.black
-                          : ref.read(unitController) == 2
-                              ? Colors.black
-                              : Colors.white)),
+              child: FittedBox(
+                child: Text('Imperial (oz/lbs)',
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: MyApp.themeNotifier.value == ThemeMode.light
+                            ? Colors.black
+                            : ref.read(unitController) == 2
+                                ? Colors.black
+                                : Colors.white)),
+              ),
             ),
           ),
           SizedBox(width: 6),
@@ -268,7 +270,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
               },
               child: Text('Light',
                   style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 18,
                       color: MyApp.themeNotifier.value == ThemeMode.light
                           ? Colors.black
                           : ref.read(recController) == 1
@@ -302,7 +304,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
               },
               child: Text('Moderate',
                   style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 18,
                       color: MyApp.themeNotifier.value == ThemeMode.light
                           ? Colors.black
                           : ref.read(recController) == 2
@@ -336,7 +338,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
               },
               child: Text('Heavy',
                   style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 18,
                       color: MyApp.themeNotifier.value == ThemeMode.light
                           ? Colors.black
                           : ref.read(recController) == 3
