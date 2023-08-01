@@ -42,12 +42,16 @@ class CountNotifier extends StateNotifier<double> {
 class BacNotifier extends StateNotifier<double> {
   BacNotifier() : super(0);
 
-  void updateBac(double weight, double genderVal, double count) {
+  void updateBac(double weight, double genderVal, double count, int unit) {
     double newBac = 0.0;
     if (weight == 0 || genderVal == 0) {
       print('Gender or weight not inputed');
     } else {
-      newBac = 100 * (count * 14) / (weight * 454 * genderVal);
+      if (unit == 1) {
+        newBac = 100 * (count * 14) / (2.2 * weight * 454 * genderVal);
+      } else if (unit == 2) {
+        newBac = 100 * (count * 14) / (weight * 454 * genderVal);
+      }
 
       if (newBac >= 0) {
         state = newBac;
@@ -79,11 +83,7 @@ class WeightNotifier extends StateNotifier<double> {
   WeightNotifier() : super(0);
 
   void setWeight(double weight, int unit) {
-    if (unit == 2) {
-      state = weight;
-    } else if (unit == 1) {
-      state = 2.2 * weight;
-    }
+    state = weight;
   }
 
   void reset() {

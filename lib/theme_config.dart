@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lift_links/main.dart';
-import 'package:lift_links/providers.dart';
 
 String fontStyle = 'Karla';
 String fancyStyle = 'GreatVibes';
 
-ThemeData createLightTheme(Color textColor) {
+ThemeData createLightTheme(Color textColor, double width, double height) {
+  final textScale = height * 0.01;
   return ThemeData(
     useMaterial3: true,
     scaffoldBackgroundColor: Colors.white,
@@ -13,61 +13,61 @@ ThemeData createLightTheme(Color textColor) {
     primarySwatch: Colors.blue,
     textTheme: TextTheme(
       headlineLarge: TextStyle(
-        fontSize: 90,
+        fontSize: textScale * 11,
         fontWeight: FontWeight.bold,
         color: Colors.black,
         fontFamily: fontStyle,
       ),
       headlineMedium: TextStyle(
-        fontSize: 40,
+        fontSize: textScale * 6,
         fontWeight: FontWeight.bold,
         color: Colors.black,
         fontFamily: fontStyle,
       ),
       headlineSmall: TextStyle(
-        fontSize: 25,
+        fontSize: textScale * 3,
         fontWeight: FontWeight.bold,
         color: Colors.black,
         fontFamily: fontStyle,
       ),
       titleLarge: TextStyle(
-        fontSize: 28,
+        fontSize: textScale * 3,
         color: Colors.black,
         fontFamily: fontStyle,
       ),
       titleMedium: TextStyle(
-        fontSize: 24,
+        fontSize: textScale * 2.5,
         color: Colors.black,
         fontFamily: fontStyle,
       ),
       titleSmall: TextStyle(
-        fontSize: 20,
+        fontSize: textScale * 2,
         color: Colors.black,
         fontFamily: fontStyle,
       ),
-      bodyLarge: const TextStyle(fontSize: 30, color: Colors.black),
+      bodyLarge: TextStyle(fontSize: textScale * 3, color: Colors.black),
       bodyMedium: TextStyle(
-        fontSize: 20,
+        fontSize: textScale * 2.5,
         color: Colors.black,
         fontFamily: fontStyle,
       ),
       bodySmall: TextStyle(
-        fontSize: 15,
+        fontSize: textScale * 2,
         color: Colors.black,
         fontFamily: fontStyle,
       ),
       displaySmall: TextStyle(
-        fontSize: 20,
+        fontSize: textScale * 2,
         color: Colors.black,
         fontFamily: fontStyle,
       ),
       displayMedium: TextStyle(
-        fontSize: 25,
+        fontSize: textScale * 2.5,
         color: Colors.black,
         fontFamily: fontStyle,
       ),
       displayLarge: TextStyle(
-        fontSize: 90,
+        fontSize: textScale * 11,
         color: Colors.black,
         fontFamily: fontStyle,
       ),
@@ -94,16 +94,15 @@ ThemeData createLightTheme(Color textColor) {
       titleTextStyle: TextStyle(
         color: Colors.black,
         fontWeight: FontWeight.bold,
-        fontSize: 20,
+        fontSize: textScale * 2.5,
         fontFamily: fontStyle,
       ),
-      //backgroundColor: selectedItem,
+      toolbarHeight: height * 1 / 15,
       backgroundColor: Colors.white,
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: Colors.white,
         elevation: 0.0,
-        //backgroundColor: selectedItem,
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.black.withOpacity(0.3)),
     textSelectionTheme: const TextSelectionThemeData(
@@ -123,7 +122,8 @@ ThemeData createLightTheme(Color textColor) {
   );
 }
 
-ThemeData createDarkTheme(Color textColor) {
+ThemeData createDarkTheme(Color textColor, double width, double height) {
+  final textScale = height * 0.01;
   return ThemeData(
     useMaterial3: true,
     scaffoldBackgroundColor: Colors.black,
@@ -131,65 +131,65 @@ ThemeData createDarkTheme(Color textColor) {
     primarySwatch: Colors.blue,
     textTheme: TextTheme(
       headlineLarge: TextStyle(
-        fontSize: 100,
+        fontSize: textScale * 11,
         fontWeight: FontWeight.bold,
         color: textColor,
         fontFamily: fontStyle,
       ),
       headlineMedium: TextStyle(
-        fontSize: 40,
+        fontSize: textScale * 6,
         fontWeight: FontWeight.bold,
         color: Colors.white,
         fontFamily: fontStyle,
       ),
       headlineSmall: TextStyle(
-        fontSize: 25,
+        fontSize: textScale * 3,
         fontWeight: FontWeight.bold,
         color: Colors.white,
         fontFamily: fontStyle,
       ),
       titleLarge: TextStyle(
-        fontSize: 28,
+        fontSize: textScale * 3,
         color: Colors.white,
         fontFamily: fontStyle,
       ),
       titleMedium: TextStyle(
-        fontSize: 24,
+        fontSize: textScale * 2.5,
         color: Colors.white,
         fontFamily: fontStyle,
       ),
       titleSmall: TextStyle(
-        fontSize: 20,
+        fontSize: textScale * 2,
         color: Colors.white,
         fontFamily: fontStyle,
       ),
       bodyLarge: TextStyle(
-        fontSize: 30,
+        fontSize: textScale * 2.5,
         color: textColor,
         fontFamily: fontStyle,
       ),
       bodyMedium: TextStyle(
-        fontSize: 20,
+        fontSize: textScale * 2,
         color: textColor,
         fontFamily: fontStyle,
       ),
       bodySmall: TextStyle(
-        fontSize: 15,
+        fontSize: textScale * 2,
         color: Colors.white,
         fontFamily: fontStyle,
       ),
       displaySmall: TextStyle(
-        fontSize: 20,
+        fontSize: textScale * 2,
         color: Colors.white,
         fontFamily: fontStyle,
       ),
       displayMedium: TextStyle(
-        fontSize: 25,
+        fontSize: textScale * 2.5,
         color: Colors.white,
         fontFamily: fontStyle,
       ),
       displayLarge: TextStyle(
-        fontSize: 90,
+        fontSize: textScale * 11,
         color: Colors.white,
         fontFamily: fontStyle,
       ),
@@ -219,12 +219,13 @@ ThemeData createDarkTheme(Color textColor) {
           size: 36,
         ),
         titleTextStyle: TextStyle(
-          color: selectedItem,
+          color: textColor,
           fontWeight: FontWeight.bold,
-          fontSize: 20,
+          fontSize: textScale * 2.5,
           fontFamily: fontStyle,
         ),
         //backgroundColor: Colors.black,
+        toolbarHeight: height * 1 / 15,
         backgroundColor: Colors.transparent),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: Colors.black,

@@ -8,6 +8,7 @@ import 'package:lift_links/tips.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:flutter/services.dart';
 
 //Globals for testing purposes
 Color selectedItem = Colors.lightBlue;
@@ -15,6 +16,11 @@ Color selectedItem = Colors.lightBlue;
 void main() {
   // wrap the entire app with a ProviderScope so that widgets
   // will be able to read providers
+// add these lines
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
   runApp(ProviderScope(
     child: MyApp(),
   ));
@@ -37,9 +43,13 @@ class MyApp extends ConsumerWidget {
             debugShowCheckedModeBanner: false,
             theme: createLightTheme(
               ref.watch(colorController),
+              MediaQuery.of(context).size.width,
+              MediaQuery.of(context).size.height,
             ),
             darkTheme: createDarkTheme(
               ref.watch(colorController),
+              MediaQuery.of(context).size.width,
+              MediaQuery.of(context).size.height,
             ),
             themeMode: currentMode,
             home: const MainPage(title: 'Party Pal App'),
@@ -87,7 +97,7 @@ class _MainPageState extends ConsumerState<MainPage> {
     weight = prefs.getDouble('weight') ?? 0.0;
     legalLimit = prefs.getDouble('limit') ?? 0.0;
     recLevel = prefs.getInt('rec') ?? 0;
-    tolerance = prefs.getDouble('tolerance') ?? 0.0;
+    tolerance = prefs.getDouble('tolerance') ?? 1.0;
     unit = prefs.getInt('unit') ?? 0;
 
     ref.read(genderController.notifier).setGender(genderVal);

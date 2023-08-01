@@ -142,7 +142,7 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
         ),
       );
 
-  Widget _drinkDisplay(double count, double width) => Material(
+  Widget _drinkDisplay(double count, double width, double height) => Material(
         elevation: 6,
         color: MyApp.themeNotifier.value == ThemeMode.light
             ? Colors.white
@@ -153,7 +153,7 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
         ),
         child: Container(
           width: width - 32,
-          height: 190,
+          height: height * 3 / 15,
           decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -180,7 +180,7 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
-                SizedBox(height: 15),
+                Expanded(child: SizedBox()),
                 Align(
                   alignment: Alignment.center,
                   child: Row(
@@ -189,7 +189,7 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
                         '${count.toStringAsFixed(1)}',
                         style: Theme.of(context).textTheme.headlineLarge,
                       ),
-                      const SizedBox(width: 15),
+                      const SizedBox(width: 8),
                       Text(
                         'std. drinks',
                         style: Theme.of(context).textTheme.bodyLarge,
@@ -216,13 +216,6 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
       appBar: AppBar(
         title: Text(
           widget.title,
-          style: TextStyle(
-            fontSize: 20,
-            color: MyApp.themeNotifier.value == ThemeMode.light
-                ? Colors.black
-                : ref.watch(colorController),
-            fontFamily: fontStyle,
-          ),
         ),
         actions: [
           IconButton(
@@ -276,7 +269,7 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   SizedBox(height: 25),
-                  _drinkDisplay(count, width),
+                  _drinkDisplay(count, width, height),
                   SizedBox(height: 25),
                   Padding(
                     padding: const EdgeInsets.only(left: 12.0),

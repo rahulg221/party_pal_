@@ -65,7 +65,7 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
     return '';
   }
 
-  Widget _bacDisplay(double bac, double width) => Material(
+  Widget _bacDisplay(double bac, double width, double height) => Material(
         elevation: 6,
         color: MyApp.themeNotifier.value == ThemeMode.light
             ? Colors.white
@@ -76,7 +76,7 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
         ),
         child: Container(
           width: width - 32,
-          height: 190,
+          height: height * 3 / 15,
           decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -103,7 +103,7 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
-                SizedBox(height: 15),
+                Expanded(child: SizedBox()),
                 Align(
                   alignment: Alignment.bottomLeft,
                   child: FittedBox(
@@ -167,12 +167,9 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title,
-            style: TextStyle(
-              color: MyApp.themeNotifier.value == ThemeMode.light
-                  ? Colors.black
-                  : ref.watch(colorController),
-            )),
+        title: Text(
+          widget.title,
+        ),
         actions: [
           IconButton(
             icon: bac >= 0.08
@@ -231,7 +228,7 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       SizedBox(height: 25),
-                      _bacDisplay(bac, width),
+                      _bacDisplay(bac, width, height),
                       SizedBox(height: 25),
                       Padding(
                         padding: const EdgeInsets.only(left: 12.0),

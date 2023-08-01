@@ -31,6 +31,15 @@ class ReusableSnackBar extends SnackBar {
                 color: Colors.black,
               ),*/
               Text(
+                'BAC will reach the legal driving limit in:\n',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  height: 1,
+                ),
+              ),
+              Text(
                 timeTillDrive,
                 style: TextStyle(
                   color: Colors.black,
@@ -40,10 +49,10 @@ class ReusableSnackBar extends SnackBar {
                 ),
               ),
               Text(
-                'until you can drive.\n',
+                'hrs               mins\n',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 20,
+                  fontSize: 15,
                   fontWeight: FontWeight.bold,
                   height: 1,
                 ),

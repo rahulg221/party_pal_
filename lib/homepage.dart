@@ -148,12 +148,12 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
     );
   }
 
-  Widget _drinkSelector() => Row(
+  Widget _drinkSelector(double height) => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
             child: SizedBox(
-              height: 40,
+              height: height * 0.05,
               child: TextButton.icon(
                 style: TextButton.styleFrom(
                   backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
@@ -165,8 +165,8 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                           : Colors.white.withOpacity(0.2),
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15.0),
-                      bottomLeft: Radius.circular(15.0),
+                      topLeft: Radius.circular(12.0),
+                      bottomLeft: Radius.circular(12.0),
                     ),
                   ),
                 ),
@@ -181,6 +181,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 },
                 icon: Icon(
                   Icons.local_drink,
+                  size: 18,
                   color: MyApp.themeNotifier.value == ThemeMode.light
                       ? Colors.black
                       : Colors.white,
@@ -196,7 +197,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           const SizedBox(width: 6),
           Expanded(
             child: SizedBox(
-              height: 40,
+              height: height * 0.05,
               child: TextButton.icon(
                 style: TextButton.styleFrom(
                   backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
@@ -218,6 +219,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 },
                 icon: Icon(
                   Icons.local_drink_outlined,
+                  size: 18,
                   color: MyApp.themeNotifier.value == ThemeMode.light
                       ? Colors.black
                       : Colors.white,
@@ -233,7 +235,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           const SizedBox(width: 6),
           Expanded(
             child: SizedBox(
-              height: 40,
+              height: height * 0.05,
               child: TextButton.icon(
                 style: TextButton.styleFrom(
                   backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
@@ -245,8 +247,8 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                           : Colors.white.withOpacity(0.2),
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(15.0),
-                      bottomRight: Radius.circular(15.0),
+                      topRight: Radius.circular(12.0),
+                      bottomRight: Radius.circular(12.0),
                     ),
                   ),
                 ),
@@ -261,6 +263,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 },
                 icon: Icon(
                   Icons.local_bar,
+                  size: 18,
                   color: MyApp.themeNotifier.value == ThemeMode.light
                       ? Colors.black
                       : Colors.white,
@@ -281,8 +284,13 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
       Stack(
         alignment: const Alignment(0.6, 0.6),
         children: [
+          // Sets to 100 if percent goes over 100, sets to 0 if percent goes negative
           Ring(
-            percent: (bacRatio * 100) > 0 ? (bacRatio * 100) : 0,
+            percent: (bacRatio) < 1
+                ? (bacRatio * 100) > 0
+                    ? (bacRatio * 100)
+                    : 0
+                : 100,
             color: RingColorScheme(ringColor: color),
             radius: width * 0.3,
             width: 15,
@@ -320,14 +328,14 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                               fontWeight: FontWeight.bold)),
                     ],
                   ),
-                  backgroundColor: ref.watch(colorController),
+                  backgroundColor: ref.watch(colorController).withOpacity(0.85),
                 );
 
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
               },
               child: Container(
-                width: width * 0.3 * 2,
-                height: width * 0.3 * 2,
+                width: width * 0.3 * 2 - 15,
+                height: width * 0.3 * 2 - 15,
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
@@ -365,14 +373,15 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           double legalLimit,
           double tolerance,
           double count,
-          double genderVal) =>
+          double genderVal,
+          int unit) =>
       Column(
         children: [
           Row(
             children: [
               Container(
                 width: (width - 32) / 2 - 3, // width - body column padding
-                height: 166,
+                height: height * 3 / 15,
                 child: TextButton(
                   style: TextButton.styleFrom(
                     backgroundColor:
@@ -395,9 +404,8 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       double localc =
                           ref.read(countController.notifier).addDrink(abv, oz);
 
-                      ref
-                          .read(bacController.notifier)
-                          .updateBac(weight, genderVal, localc);
+                      ref.read(bacController.notifier).updateBac(
+                          weight, genderVal, localc, ref.watch(unitController));
 
                       ref
                           .read(colorController.notifier)
@@ -427,7 +435,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                     child: Container(
                       width:
                           (width - 32) / 2 - 3, // width - body column padding
-                      height: 80,
+                      height: (height * 3 / 15) / 2 - 3,
                       child: TextButton(
                         style: TextButton.styleFrom(
                           backgroundColor:
@@ -436,7 +444,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                                   : Colors.white.withOpacity(
                                       0.2), // Change the background color here
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
+                            borderRadius: BorderRadius.circular(16.0),
                           ),
                         ),
                         onPressed: () => _showDialog(CupertinoPicker(
@@ -490,7 +498,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                     child: Container(
                       width:
                           (width - 32) / 2 - 3, // width - body column padding
-                      height: 80,
+                      height: (height * 3 / 15) / 2 - 3,
                       child: TextButton(
                         style: TextButton.styleFrom(
                           backgroundColor:
@@ -499,7 +507,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                                   : Colors.white.withOpacity(
                                       0.2), // Change the background color here
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
+                            borderRadius: BorderRadius.circular(16.0),
                           ),
                         ),
                         onPressed: () => _showDialog(CupertinoPicker(
@@ -559,7 +567,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 alignment: Alignment.centerLeft,
                 child: Container(
                   width: (width - 32) / 2 - 3, // width - body column padding
-                  height: 50,
+                  height: height * 0.05,
                   child: TextButton(
                     style: TextButton.styleFrom(
                       backgroundColor:
@@ -568,15 +576,14 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                               : Colors.white.withOpacity(
                                   0.1), // Change the background color here
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+                        borderRadius: BorderRadius.circular(12.0),
                       ),
                     ),
                     onPressed: () {
                       double localc =
                           ref.read(countController.notifier).undoDrink(abv, oz);
-                      ref
-                          .read(bacController.notifier)
-                          .updateBac(weight, genderVal, localc);
+                      ref.read(bacController.notifier).updateBac(
+                          weight, genderVal, localc, ref.watch(unitController));
 
                       double localBac = ref.watch(bacController);
 
@@ -587,7 +594,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                     },
                     child: Icon(
                       Icons.undo,
-                      size: 30,
+                      size: 25,
                       color: MyApp.themeNotifier.value == ThemeMode.light
                           ? Colors.black
                           : Colors.white,
@@ -600,7 +607,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 alignment: Alignment.centerRight,
                 child: Container(
                   width: (width - 32) / 2 - 3, // width - body column padding
-                  height: 50,
+                  height: height * 0.05,
                   child: TextButton(
                     style: TextButton.styleFrom(
                       backgroundColor:
@@ -609,7 +616,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                               : Colors.white.withOpacity(
                                   0.1), // Change the background color here
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+                        borderRadius: BorderRadius.circular(12.0),
                       ),
                     ),
                     onPressed: () {
@@ -627,7 +634,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                     },
                     child: Icon(
                       Icons.refresh,
-                      size: 30,
+                      size: 25,
                       color: MyApp.themeNotifier.value == ThemeMode.light
                           ? Colors.black
                           : Colors.white,
@@ -640,9 +647,9 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
         ],
       );
 
-  Widget _bacButton(double bac) => SizedBox(
-        height: 45,
-        width: 180,
+  Widget _bacButton(double bac, double width, double height) => SizedBox(
+        height: height * 0.05,
+        width: width / 2.5,
         child: TextButton(
           style: TextButton.styleFrom(
             backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
@@ -653,9 +660,12 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 borderRadius: BorderRadius.circular(30.0)),
           ),
           onPressed: () {},
-          child: Text(
-            'BAC: ${bac.toStringAsFixed(3)}',
-            style: Theme.of(context).textTheme.displaySmall,
+          child: FittedBox(
+            fit: BoxFit.fitWidth,
+            child: Text(
+              'BAC: ${bac.toStringAsFixed(3)}',
+              style: Theme.of(context).textTheme.displaySmall,
+            ),
           ),
         ),
       );
@@ -707,7 +717,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
     double legalLimit = ref.watch(limitController);
     int recLevel = ref.watch(recController);
     double tolerance = ref.watch(tolController);
-    //int unit = ref.watch(unitController);
+    int unit = ref.watch(unitController);
     Color color = ref.watch(colorController);
     double genderVal = ref.watch(genderController);
     //List<Drink> drinks = ref.watch(drinkController);
@@ -758,12 +768,10 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             },
           ),
         ],
-        flexibleSpace: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _bacButton(bac),
-            ],
+        flexibleSpace: Padding(
+          padding: EdgeInsets.only(top: height * 0.02),
+          child: Center(
+            child: _bacButton(bac, width, height),
           ),
         ),
         backgroundColor: Colors.transparent,
@@ -776,18 +784,18 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                SizedBox(height: 80),
+                SizedBox(height: height * 0.1),
                 _countDisplay(
                     count,
                     color,
                     findRatio(recLevel, bac, legalLimit, tolerance),
                     width,
                     height),
-                Expanded(child: SizedBox()),
-                _drinkSelector(),
+                Expanded(child: SizedBox(height: height * 0.1)),
+                _drinkSelector(height),
                 SizedBox(height: 6),
                 _inputPanel(width, height, weight, abv, oz, bac, recLevel,
-                    legalLimit, tolerance, count, genderVal),
+                    legalLimit, tolerance, count, genderVal, unit),
                 SizedBox(height: 6),
               ],
             ),

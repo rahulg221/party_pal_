@@ -162,16 +162,14 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
               onPressed: () {
                 ref.read(unitController.notifier).setUnit(2);
               },
-              child: FittedBox(
-                child: Text('Imperial (oz/lbs)',
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: MyApp.themeNotifier.value == ThemeMode.light
-                            ? Colors.black
-                            : ref.read(unitController) == 2
-                                ? Colors.black
-                                : Colors.white)),
-              ),
+              child: Text('Imperial (oz/lbs)',
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: MyApp.themeNotifier.value == ThemeMode.light
+                          ? Colors.black
+                          : ref.read(unitController) == 2
+                              ? Colors.black
+                              : Colors.white)),
             ),
           ),
           SizedBox(width: 6),
@@ -200,7 +198,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
               },
               child: Text('Metric (ml/kg)',
                   style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 18,
                       color: MyApp.themeNotifier.value == ThemeMode.light
                           ? Colors.black
                           : ref.read(unitController) == 1
@@ -639,8 +637,13 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                               ),
                             )),
                         SizedBox(height: 25),
-                        _textField('Please enter your weight.', 'Weight',
-                            weight, unit),
+                        _textField(
+                            unit == 1
+                                ? 'Please enter your weight in kgs.'
+                                : 'Please enter your weight in lbs.',
+                            'Weight',
+                            weight,
+                            unit),
                         SizedBox(height: 25),
                         Container(
                           decoration: BoxDecoration(
