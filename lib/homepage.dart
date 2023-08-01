@@ -292,8 +292,8 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                     : 0
                 : 100,
             color: RingColorScheme(ringColor: color),
-            radius: width * 0.3,
-            width: 15,
+            radius: width * 0.25,
+            width: 12,
             child: GestureDetector(
               onTap: () {
                 print('bac ratio: $bacRatio');
@@ -334,8 +334,8 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
               },
               child: Container(
-                width: width * 0.3 * 2 - 15,
-                height: width * 0.3 * 2 - 15,
+                width: width * 0.25 * 2 - 12,
+                height: width * 0.25 * 2 - 12,
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
@@ -567,7 +567,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 alignment: Alignment.centerLeft,
                 child: Container(
                   width: (width - 32) / 2 - 3, // width - body column padding
-                  height: height * 0.05,
+                  height: height * 0.06,
                   child: TextButton(
                     style: TextButton.styleFrom(
                       backgroundColor:
@@ -607,7 +607,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 alignment: Alignment.centerRight,
                 child: Container(
                   width: (width - 32) / 2 - 3, // width - body column padding
-                  height: height * 0.05,
+                  height: height * 0.06,
                   child: TextButton(
                     style: TextButton.styleFrom(
                       backgroundColor:
