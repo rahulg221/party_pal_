@@ -64,7 +64,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
     prefs.setInt('unit', 0);
   }
 
-  Widget _genderButton(double width) => Row(
+  Widget _genderButton(double width, double height) => Row(
         children: [
           Container(
             width: (width - 32) / 2 - 3, // width - body column padding
@@ -92,7 +92,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
               },
               child: Text('Male',
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: height * 0.01 * 2,
                       color: MyApp.themeNotifier.value == ThemeMode.light
                           ? Colors.black
                           : ref.read(genderController) == 0.68
@@ -126,7 +126,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
               },
               child: Text('Female',
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: height * 0.01 * 2,
                       color: MyApp.themeNotifier.value == ThemeMode.light
                           ? Colors.black
                           : ref.read(genderController) == 0.55
@@ -137,7 +137,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
         ],
       );
 
-  Widget _unitButtons(double width) => Row(
+  Widget _unitButtons(double width, double height) => Row(
         children: [
           Container(
             width: (width - 32) / 2 - 3, // width - body column padding
@@ -164,7 +164,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
               },
               child: Text('Imperial (oz/lbs)',
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: height * 0.01 * 2,
                       color: MyApp.themeNotifier.value == ThemeMode.light
                           ? Colors.black
                           : ref.read(unitController) == 2
@@ -198,7 +198,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
               },
               child: Text('Metric (ml/kg)',
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: height * 0.01 * 2,
                       color: MyApp.themeNotifier.value == ThemeMode.light
                           ? Colors.black
                           : ref.read(unitController) == 1
@@ -209,8 +209,16 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
         ],
       );
 
-  Widget _saveButton(double width, double weight, double age, double legalLimit,
-          double gender, int recLevel, double tolerance, int unit) =>
+  Widget _saveButton(
+          double width,
+          double height,
+          double weight,
+          double age,
+          double legalLimit,
+          double gender,
+          int recLevel,
+          double tolerance,
+          int unit) =>
       Container(
         width: (width - 32), // width - body column padding
         height: 60,
@@ -234,14 +242,14 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
           child: Text(
             'Save',
             style: TextStyle(
-              fontSize: 20,
+              fontSize: height * 0.01 * 2.5,
               color: Colors.black,
             ),
           ),
         ),
       );
 
-  Widget _recLevel(double width, ThemeMode theme) => Row(
+  Widget _recLevel(double width, double height, ThemeMode theme) => Row(
         children: [
           Container(
             width: (width - 32) / 3 - 8, // width - body column padding
@@ -268,7 +276,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
               },
               child: Text('Light',
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: height * 0.01 * 2,
                       color: MyApp.themeNotifier.value == ThemeMode.light
                           ? Colors.black
                           : ref.read(recController) == 1
@@ -302,7 +310,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
               },
               child: Text('Moderate',
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: height * 0.01 * 2,
                       color: MyApp.themeNotifier.value == ThemeMode.light
                           ? Colors.black
                           : ref.read(recController) == 2
@@ -336,7 +344,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
               },
               child: Text('Heavy',
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: height * 0.01 * 2,
                       color: MyApp.themeNotifier.value == ThemeMode.light
                           ? Colors.black
                           : ref.read(recController) == 3
@@ -566,11 +574,11 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                                 child: Text('Gender',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .displaySmall),
+                                        .displayMedium),
                               ),
                             )),
                         SizedBox(height: 25),
-                        _genderButton(width),
+                        _genderButton(width, height),
                         SizedBox(height: 25),
                         Container(
                           decoration: BoxDecoration(
@@ -586,13 +594,14 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                             child: Center(
                               child: Text(
                                 'Unit System',
-                                style: Theme.of(context).textTheme.displaySmall,
+                                style:
+                                    Theme.of(context).textTheme.displayMedium,
                               ),
                             ),
                           ),
                         ),
                         SizedBox(height: 25),
-                        _unitButtons(width),
+                        _unitButtons(width, height),
                         SizedBox(height: 25),
                         Container(
                             decoration: BoxDecoration(
@@ -610,7 +619,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                                 child: Text('Age',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .displaySmall),
+                                        .displayMedium),
                               ),
                             )),
                         SizedBox(height: 25),
@@ -633,7 +642,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                                 child: Text('Weight',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .displaySmall),
+                                        .displayMedium),
                               ),
                             )),
                         SizedBox(height: 25),
@@ -664,7 +673,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                                     'Driving Legal Limit',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .displaySmall,
+                                        .displayMedium,
                                   ),
                                 ),
                                 _infoIcon(
@@ -697,7 +706,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                                     'Recommendation Level',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .displaySmall,
+                                        .displayMedium,
                                   ),
                                 ),
                                 _infoIcon(
@@ -710,6 +719,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                         SizedBox(height: 25),
                         _recLevel(
                           width,
+                          height,
                           MyApp.themeNotifier.value == ThemeMode.light
                               ? ThemeMode.light
                               : ThemeMode.dark,
@@ -734,7 +744,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                                     'Tolerance Level',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .displaySmall,
+                                        .displayMedium,
                                   ),
                                 ),
                                 _infoIcon(
@@ -775,8 +785,8 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
               ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: _saveButton(width, weight, age, legalLimit, genderVal,
-                    recLevel, tolerance, unit),
+                child: _saveButton(width, height, weight, age, legalLimit,
+                    genderVal, recLevel, tolerance, unit),
               ),
             ],
           ),

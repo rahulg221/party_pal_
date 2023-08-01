@@ -19,7 +19,7 @@ ThemeData createLightTheme(Color textColor, double width, double height) {
         fontFamily: fontStyle,
       ),
       headlineMedium: TextStyle(
-        fontSize: textScale * 6,
+        fontSize: textScale * 3.2,
         fontWeight: FontWeight.bold,
         color: Colors.black,
         fontFamily: fontStyle,
@@ -137,7 +137,7 @@ ThemeData createDarkTheme(Color textColor, double width, double height) {
         fontFamily: fontStyle,
       ),
       headlineMedium: TextStyle(
-        fontSize: textScale * 6,
+        fontSize: textScale * 3.2,
         fontWeight: FontWeight.bold,
         color: Colors.white,
         fontFamily: fontStyle,
@@ -145,7 +145,7 @@ ThemeData createDarkTheme(Color textColor, double width, double height) {
       headlineSmall: TextStyle(
         fontSize: textScale * 3,
         fontWeight: FontWeight.bold,
-        color: Colors.white,
+        color: textColor,
         fontFamily: fontStyle,
       ),
       titleLarge: TextStyle(
@@ -169,7 +169,7 @@ ThemeData createDarkTheme(Color textColor, double width, double height) {
         fontFamily: fontStyle,
       ),
       bodyMedium: TextStyle(
-        fontSize: textScale * 2,
+        fontSize: textScale * 2.5,
         color: textColor,
         fontFamily: fontStyle,
       ),

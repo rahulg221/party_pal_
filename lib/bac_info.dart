@@ -235,7 +235,8 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text('You may experience',
-                              style: Theme.of(context).textTheme.headlineSmall),
+                              style:
+                                  Theme.of(context).textTheme.headlineMedium),
                         ),
                       ),
                       SizedBox(height: 5),
@@ -246,7 +247,8 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text('What is BAC?',
-                              style: Theme.of(context).textTheme.headlineSmall),
+                              style:
+                                  Theme.of(context).textTheme.headlineMedium),
                         ),
                       ),
                       SizedBox(height: 5),
@@ -261,7 +263,8 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text('How is BAC calculated?',
-                              style: Theme.of(context).textTheme.headlineSmall),
+                              style:
+                                  Theme.of(context).textTheme.headlineMedium),
                         ),
                       ),
                       SizedBox(height: 5),
@@ -277,7 +280,8 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
                           alignment: Alignment.centerLeft,
                           child: Text(
                               'What is the legal BAC limit for driving?',
-                              style: Theme.of(context).textTheme.headlineSmall),
+                              style:
+                                  Theme.of(context).textTheme.headlineMedium),
                         ),
                       ),
                       SizedBox(height: 5),
@@ -292,7 +296,8 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Text('How can I sober up faster?',
-                              style: Theme.of(context).textTheme.headlineSmall),
+                              style:
+                                  Theme.of(context).textTheme.headlineMedium),
                         ),
                       ),
                       SizedBox(height: 5),
@@ -308,7 +313,8 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
                           alignment: Alignment.centerLeft,
                           child: Text(
                               'What are the signs of alcohol poisoning?',
-                              style: Theme.of(context).textTheme.headlineSmall),
+                              style:
+                                  Theme.of(context).textTheme.headlineMedium),
                         ),
                       ),
                       SizedBox(height: 5),

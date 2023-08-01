@@ -52,7 +52,8 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
     return '$hour:$minute $period';
   }
 
-  Widget _drinkList(double width, List<Drink> drinks) => Material(
+  Widget _drinkList(double width, double height, List<Drink> drinks) =>
+      Material(
         elevation: 6,
         color: MyApp.themeNotifier.value == ThemeMode.light
             ? Colors.white
@@ -94,7 +95,7 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
                 title: Text(
                   drink.type,
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: height * 0.01 * 2.5,
                     color: MyApp.themeNotifier.value == ThemeMode.light
                         ? Colors.black.withOpacity(0.9)
                         : ref.watch(colorController),
@@ -104,7 +105,7 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
                 subtitle: Text(
                   time,
                   style: TextStyle(
-                    fontSize: 22,
+                    fontSize: height * 0.01 * 2,
                     color: MyApp.themeNotifier.value == ThemeMode.light
                         ? Colors.black.withOpacity(0.9)
                         : ref.watch(colorController),
@@ -117,7 +118,7 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
                     Text(
                       '${drink.percentage}%',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: height * 0.01 * 2,
                         color: MyApp.themeNotifier.value == ThemeMode.light
                             ? Colors.black.withOpacity(0.9)
                             : ref.watch(colorController),
@@ -127,7 +128,7 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
                     Text(
                       '${drink.size} oz',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: height * 0.01 * 2,
                         color: MyApp.themeNotifier.value == ThemeMode.light
                             ? Colors.black.withOpacity(0.9)
                             : ref.watch(colorController),
@@ -192,7 +193,7 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
                       const SizedBox(width: 8),
                       Text(
                         'std. drinks',
-                        style: Theme.of(context).textTheme.bodyLarge,
+                        style: Theme.of(context).textTheme.headlineSmall,
                       ),
                     ],
                   ),
@@ -279,11 +280,11 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
                           MyApp.themeNotifier.value == ThemeMode.light
                               ? "Today's Drinks"
                               : "Tonight's Drinks",
-                          style: Theme.of(context).textTheme.headlineSmall),
+                          style: Theme.of(context).textTheme.headlineMedium),
                     ),
                   ),
                   SizedBox(height: 5),
-                  Expanded(child: _drinkList(width, drinks)),
+                  Expanded(child: _drinkList(width, height, drinks)),
                 ],
               ),
             ),
