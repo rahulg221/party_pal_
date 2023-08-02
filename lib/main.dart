@@ -137,15 +137,15 @@ class _MainPageState extends ConsumerState<MainPage> {
           onTap: (newIndex) => pageController.jumpToPage(newIndex),
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.local_bar),
+              icon: Icon(Icons.local_bar, size: 20),
               label: 'Add Drinks',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.access_time_outlined),
+              icon: Icon(Icons.access_time_outlined, size: 20),
               label: 'Drink History',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.info),
+              icon: Icon(Icons.info, size: 20),
               label: 'BAC Info',
             ),
             /*BottomNavigationBarItem(
