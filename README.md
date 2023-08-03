@@ -1,5 +1,4 @@
-# lift_links
-
+# Party Pal
 A new Flutter project.
 
 ## Getting Started
