@@ -26,7 +26,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   Timer? timer;
 
   String drinkType = 'Beer';
-  int ozLength = 6;
+  int ozLength = 3;
   int abvLength = 6;
   String listName = '';
 
