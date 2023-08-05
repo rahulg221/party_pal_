@@ -386,7 +386,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
           });
         },
         decoration: InputDecoration(
-          labelText: labelText,
+          //labelText: value == 0 ? labelText : '$value',
           hintText: value == 0 ? hintText : '$value',
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(

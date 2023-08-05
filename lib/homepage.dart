@@ -847,7 +847,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                SizedBox(height: height * 0.1),
+                SizedBox(height: height * 0.08),
                 _countDisplay(
                     count,
                     color,
