@@ -847,14 +847,16 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                SizedBox(height: height * 0.08),
+                //SizedBox(height: height * 0.08),
+                Expanded(child: SizedBox(height: height * 0.1)),
                 _countDisplay(
                     count,
                     color,
                     findRatio(recLevel, bac, legalLimit, tolerance),
                     width,
                     height),
-                Expanded(child: SizedBox(height: height * 0.1)),
+                //Expanded(child: SizedBox(height: height * 0.1)),
+                SizedBox(height: height * 0.1),
                 _drinkSelector(height),
                 SizedBox(height: 6),
                 _inputPanel(width, height, weight, abv, oz, bac, recLevel,
