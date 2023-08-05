@@ -30,10 +30,14 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   int abvLength = 6;
   String listName = '';
 
+  int currentIndex = 0;
+
   bool isBeer = true;
   bool isWine = false;
   bool isLiquor = false;
   double _kItemExtent = 32.0;
+
+  String sizeDisplay = '1 Can';
 
   final List<double> _liquorAbv = [
     35.0,
@@ -48,11 +52,41 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   final List<double> _wineAbv = [9, 10, 11, 12, 13, 14];
 
   final List<double> _liquorOz = [0.75, 1.25, 1.5, 2.0];
-  final List<double> _wineOz = [5, 6, 7, 8, 9, 10, 11, 12];
-  final List<double> _beerOz = [12, 16, 17, 18, 19, 20];
+  final List<String> _liquorOzStr = [
+    '1/2 shot',
+    '1 Small Shot',
+    '1 Shot',
+    '1 Large Shot'
+  ];
+  final List<String> _liquorOzStr_ = [
+    '1/2 shot (0.75 oz / 22ml)',
+    '1 Small Shot (1.25 oz / 37ml)',
+    '1 Shot (1.5 oz / 44ml)',
+    '1 Large Shot (2.0 oz / 59ml)'
+  ];
+  final List<double> _wineOz = [5, 8, 12];
+  final List<String> _wineOzStr = [
+    '1 Small Glass',
+    '1 Medium Glass',
+    '1 Large Glass',
+  ];
+  final List<String> _wineOzStr_ = [
+    '1 Small Glass (5 oz / 148ml)',
+    '1 Medium Glass (8 oz / 237ml)',
+    '1 Large Glass (12 oz / 355ml)',
+  ];
 
-  double oz = 0.0;
-  double abv = 0.0;
+  final List<double> _beerOz = [8.4, 12, 16];
+  final List<String> _beerOzStr = [
+    '1 Small Can',
+    '1 Can',
+    '1 Large Can',
+  ];
+  final List<String> _beerOzStr_ = [
+    '1 Small Can (8.4 oz / 250ml)',
+    '1 Can (12 oz / 355 ml)',
+    '1 Large Can (16 oz / 473 ml)',
+  ];
 
   void toggleTheme() {
     MyApp.themeNotifier.value = MyApp.themeNotifier.value == ThemeMode.light
@@ -172,12 +206,17 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 ),
                 onPressed: () {
                   setState(() {
+                    sizeDisplay = _beerOzStr[1];
                     drinkType = 'Beer';
-                    isBeer = true;
-                    isWine = false;
-                    isLiquor = false;
-                    ozLength = _beerOz.length;
                   });
+
+                  isBeer = true;
+                  isWine = false;
+                  isLiquor = false;
+                  ozLength = _beerOz.length;
+
+                  ref.read(ozController.notifier).setOz(_beerOz[1]);
+                  ref.read(abvController.notifier).setAbv(_beerAbv[1]);
                 },
                 icon: Icon(
                   Icons.local_drink,
@@ -210,12 +249,17 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 ),
                 onPressed: () {
                   setState(() {
+                    sizeDisplay = _liquorOzStr[2];
                     drinkType = 'Liquor';
-                    isLiquor = true;
-                    isBeer = false;
-                    isWine = false;
-                    ozLength = _liquorOz.length;
                   });
+
+                  isLiquor = true;
+                  isBeer = false;
+                  isWine = false;
+                  ozLength = _liquorOz.length;
+
+                  ref.read(ozController.notifier).setOz(_liquorOz[2]);
+                  ref.read(abvController.notifier).setAbv(_liquorAbv[1]);
                 },
                 icon: Icon(
                   Icons.local_drink_outlined,
@@ -254,12 +298,17 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 ),
                 onPressed: () {
                   setState(() {
+                    sizeDisplay = _wineOzStr[0];
                     drinkType = 'Wine';
-                    isWine = true;
-                    isBeer = false;
-                    isLiquor = false;
-                    ozLength = _wineOz.length;
                   });
+
+                  isWine = true;
+                  isBeer = false;
+                  isLiquor = false;
+                  ozLength = _wineOz.length;
+
+                  ref.read(ozController.notifier).setOz(_wineOz[0]);
+                  ref.read(abvController.notifier).setAbv(_wineAbv[3]);
                 },
                 icon: Icon(
                   Icons.local_bar,
@@ -352,7 +401,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                     shape: BoxShape.circle),
                 child: Center(
                   child: Text(
-                    '${count.toStringAsFixed(1)}',
+                    count.toStringAsFixed(1),
                     style: Theme.of(context).textTheme.displayLarge,
                   ),
                 ),
@@ -454,40 +503,43 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                           itemExtent: _kItemExtent,
                           // This sets the initial item.
                           scrollController: FixedExtentScrollController(
-                            initialItem: 1,
+                            initialItem: currentIndex,
                           ),
                           // This is called when selected item is changed.
                           onSelectedItemChanged: (int selectedItemIndex) {
-                            setState(() {
-                              if (drinkType == 'Liquor') {
-                                ref
-                                    .read(ozController.notifier)
-                                    .setOz(_liquorOz[selectedItemIndex]);
-                              } else if (drinkType == 'Wine') {
-                                ref
-                                    .read(ozController.notifier)
-                                    .setOz(_wineOz[selectedItemIndex]);
-                              } else if (drinkType == 'Beer') {
-                                ref
-                                    .read(ozController.notifier)
-                                    .setOz(_beerOz[selectedItemIndex]);
-                              }
-                            });
+                            currentIndex = selectedItemIndex;
+
+                            if (drinkType == 'Liquor') {
+                              sizeDisplay = _liquorOzStr[selectedItemIndex];
+                              ref
+                                  .read(ozController.notifier)
+                                  .setOz(_liquorOz[selectedItemIndex]);
+                            } else if (drinkType == 'Wine') {
+                              sizeDisplay = _wineOzStr[selectedItemIndex];
+                              ref
+                                  .read(ozController.notifier)
+                                  .setOz(_wineOz[selectedItemIndex]);
+                            } else if (drinkType == 'Beer') {
+                              sizeDisplay = _beerOzStr[selectedItemIndex];
+                              ref
+                                  .read(ozController.notifier)
+                                  .setOz(_beerOz[selectedItemIndex]);
+                            }
                           },
                           children:
                               List<Widget>.generate(ozLength, (int index) {
                             if (drinkType == 'Liquor') {
-                              return Center(child: Text('${_liquorOz[index]}'));
+                              return Center(child: Text(_liquorOzStr_[index]));
                             } else if (drinkType == 'Wine') {
-                              return Center(child: Text('${_wineOz[index]}'));
+                              return Center(child: Text(_wineOzStr_[index]));
                             } else if (drinkType == 'Beer') {
-                              return Center(child: Text('${_beerOz[index]}'));
+                              return Center(child: Text(_beerOzStr_[index]));
                             }
 
                             return Center(child: Text('Error'));
                           }),
                         )),
-                        child: Text('$oz oz',
+                        child: Text(sizeDisplay,
                             style: Theme.of(context).textTheme.displayMedium),
                       ),
                     ),
@@ -541,17 +593,19 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                               List<Widget>.generate(abvLength, (int index) {
                             if (drinkType == 'Liquor') {
                               return Center(
-                                  child: Text('${_liquorAbv[index]}'));
+                                  child: Text('${_liquorAbv[index]} %'));
                             } else if (drinkType == 'Wine') {
-                              return Center(child: Text('${_wineAbv[index]}'));
+                              return Center(
+                                  child: Text('${_wineAbv[index]} %'));
                             } else if (drinkType == 'Beer') {
-                              return Center(child: Text('${_beerAbv[index]}'));
+                              return Center(
+                                  child: Text('${_beerAbv[index]} %'));
                             }
 
                             return Center(child: Text('Error'));
                           }),
                         )),
-                        child: Text('$abv %',
+                        child: Text('${ref.watch(abvController)} %',
                             style: Theme.of(context).textTheme.displayMedium),
                       ),
                     ),

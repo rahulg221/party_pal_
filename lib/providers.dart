@@ -146,7 +146,7 @@ class GenderNotifier extends StateNotifier<double> {
 }
 
 class AbvNotifier extends StateNotifier<double> {
-  AbvNotifier() : super(0);
+  AbvNotifier() : super(5.0);
 
   void setAbv(double abv) {
     state = abv;
@@ -158,7 +158,7 @@ class AbvNotifier extends StateNotifier<double> {
 }
 
 class OzNotifier extends StateNotifier<double> {
-  OzNotifier() : super(0);
+  OzNotifier() : super(12.0);
 
   void setOz(double oz) {
     state = oz;
