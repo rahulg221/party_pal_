@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'main.dart';
@@ -408,6 +409,10 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                 : Colors.white,
           ),
         ),
+        keyboardType: TextInputType.numberWithOptions(decimal: true),
+        inputFormatters: <TextInputFormatter>[
+          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*')),
+        ],
       );
 
   Widget _tSlider(double currentTol) => SliderTheme(
