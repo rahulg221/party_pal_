@@ -30,7 +30,8 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   int abvLength = 6;
   String listName = '';
 
-  int currentIndex = 0;
+  int currentIndex = 1;
+  int currentAbvIndex = 1;
 
   bool isBeer = true;
   bool isWine = false;
@@ -211,6 +212,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   });
 
                   currentIndex = 1;
+                  currentAbvIndex = 1;
                   isBeer = true;
                   isWine = false;
                   isLiquor = false;
@@ -255,6 +257,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   });
 
                   currentIndex = 2;
+                  currentAbvIndex = 1;
                   isLiquor = true;
                   isBeer = false;
                   isWine = false;
@@ -305,6 +308,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   });
 
                   currentIndex = 0;
+                  currentAbvIndex = 3;
                   isWine = true;
                   isBeer = false;
                   isLiquor = false;
@@ -572,10 +576,12 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                           itemExtent: _kItemExtent,
                           // This sets the initial item.
                           scrollController: FixedExtentScrollController(
-                            initialItem: 1,
+                            initialItem: currentAbvIndex,
                           ),
                           // This is called when selected item is changed.
                           onSelectedItemChanged: (int selectedItemIndex) {
+                            currentAbvIndex = selectedItemIndex;
+
                             setState(() {
                               if (drinkType == 'Liquor') {
                                 ref
