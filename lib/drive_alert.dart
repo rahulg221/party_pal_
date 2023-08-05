@@ -7,7 +7,6 @@ class ReusableSnackBar extends SnackBar {
     required double bac,
     Color backgroundColor = Colors.transparent,
     Duration duration = const Duration(seconds: 8),
-    VoidCallback? onActionPressed,
   }) : super(
           content: Column(
             children: [
@@ -34,7 +33,7 @@ class ReusableSnackBar extends SnackBar {
                 'BAC will reach the legal driving limit in:\n',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 16,
+                  fontSize: MediaQuery.of(context).size.height * 0.01 * 2,
                   fontWeight: FontWeight.bold,
                   height: 1,
                 ),
@@ -43,7 +42,7 @@ class ReusableSnackBar extends SnackBar {
                 timeTillDrive,
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 60,
+                  fontSize: MediaQuery.of(context).size.height * 0.01 * 10,
                   fontWeight: FontWeight.bold,
                   height: 1,
                 ),
@@ -52,7 +51,7 @@ class ReusableSnackBar extends SnackBar {
                 'hrs               mins\n',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 15,
+                  fontSize: MediaQuery.of(context).size.height * 0.01 * 2,
                   fontWeight: FontWeight.bold,
                   height: 1,
                 ),
@@ -62,7 +61,7 @@ class ReusableSnackBar extends SnackBar {
                     ? 'Call a friend or a ride share service to take you home.'
                     : 'Your estimated BAC is below the indicated legal limit.',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: MediaQuery.of(context).size.height * 0.01 * 2.5,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                   height: 1,
@@ -72,7 +71,7 @@ class ReusableSnackBar extends SnackBar {
               Text(
                 'This is just an estimate, make sure to use your own judgment to determine if you should drive',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: MediaQuery.of(context).size.height * 0.01 * 2.5,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                   height: 1,
