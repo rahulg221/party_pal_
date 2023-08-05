@@ -20,22 +20,6 @@ class _MyTipsPageState extends ConsumerState<MyTipsPage> {
         : ThemeMode.light;
   }
 
-  SnackBar _snackBar() => SnackBar(
-        duration: Duration(seconds: 4),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft:
-                Radius.circular(20.0), // Adjust the top left corner radius here
-            topRight: Radius.circular(
-                20.0), // Adjust the top right corner radius here
-          ),
-        ),
-        content: Text(
-            'It is currently illegal to drive.\n\nYou will be fully sober in 5 hrs 30 mins.\n\nThis is merely an estimate, always use your own judgement to determine if you are fit to drive.',
-            style: TextStyle(color: Colors.black)),
-        backgroundColor: selectedItem,
-      );
-
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -55,8 +39,6 @@ class _MyTipsPageState extends ConsumerState<MyTipsPage> {
             iconSize: 25,
             onPressed: () {
               // Navigating to the MyProfilePage when the settings icon is tapped
-              final snackBar = _snackBar();
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
             },
           ),
           IconButton(

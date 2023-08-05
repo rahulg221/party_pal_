@@ -81,7 +81,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   void startTimer() {
     print('Starting timer');
     // Start the timer when the button is pressed
-    timer = Timer.periodic(Duration(seconds: 60), (_) {
+    timer = Timer.periodic(Duration(seconds: 1), (_) {
       // Make sure initialTime is not null before calling updateBac
       if (ref.watch(bacController) <= 0) {
         stopTimer();
@@ -663,7 +663,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           child: FittedBox(
             fit: BoxFit.fitWidth,
             child: Text(
-              'BAC: ${bac.toStringAsFixed(3)}',
+              'BAC: ${bac.toStringAsFixed(6)}',
               style: Theme.of(context).textTheme.displayMedium,
             ),
           ),

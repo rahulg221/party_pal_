@@ -10,13 +10,54 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/services.dart';
 
-//Globals for testing purposes
-Color selectedItem = Colors.lightBlue;
+class LifeCycle extends ConsumerStatefulWidget {
+  final Widget child;
+  const LifeCycle({Key? key, required this.child}) : super(key: key);
+
+  @override
+  _LifeCycleState createState() => _LifeCycleState();
+}
+
+class _LifeCycleState extends ConsumerState<LifeCycle>
+    with WidgetsBindingObserver {
+  DateTime timePaused = DateTime.now();
+  DateTime timeResumed = DateTime.now();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      timePaused = DateTime.now();
+      print('Time paused: $timePaused');
+    } else if (state == AppLifecycleState.resumed) {
+      timeResumed = DateTime.now();
+      print('Time resumed: $timeResumed');
+      ref.read(bacController.notifier).appResume(timePaused);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.child;
+  }
+}
 
 void main() {
   // wrap the entire app with a ProviderScope so that widgets
   // will be able to read providers
 // add these lines
+
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
@@ -30,7 +71,7 @@ class MyApp extends ConsumerWidget {
   static final ValueNotifier<ThemeMode> themeNotifier =
       ValueNotifier(ThemeMode.light);
 
-  const MyApp({super.key});
+  MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -52,7 +93,11 @@ class MyApp extends ConsumerWidget {
               MediaQuery.of(context).size.height,
             ),
             themeMode: currentMode,
-            home: const MainPage(title: 'Party Pal App'),
+            home: LifeCycle(
+              child: MainPage(
+                title: 'Party Pal App',
+              ),
+            ),
           );
         });
   }

@@ -65,7 +65,25 @@ class BacNotifier extends StateNotifier<double> {
     double newBac = 0.0;
 
     newBac = state -
-        (0.015 * (60 / 3600)); // replace 60 with timer interval in seocnds
+        (0.015 * (1 / 3600)); // replace 60 with timer interval in seocnds
+
+    if (newBac >= 0) {
+      state = newBac;
+    } else {
+      state = 0;
+    }
+  }
+
+  void appResume(DateTime timePaused) {
+    double newBac = 0.0;
+
+    DateTime currentTime = DateTime.now();
+    Duration diff = currentTime.difference(timePaused);
+    int secDiff = diff.inSeconds;
+
+    print('Seconds paused $secDiff');
+
+    newBac = state - (0.015 * (secDiff / 3600));
 
     if (newBac >= 0) {
       state = newBac;
