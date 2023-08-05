@@ -24,7 +24,7 @@ For college students, a grave issue in today's age is binge drinking. Many stude
 
 - Driving Alert
   
-  Provides a real-time timer countdownt to let the user know when their BAC level will fall below the indicated legal driving limit. The timer is intentioned to only be an estimate, and the user is urged to always use their own judgment when deciding to drive.
+  Provides a real-time timer countdown to let the user know when their BAC level will fall below the indicated legal driving limit. The timer is intentioned to only be an estimate, and the user is urged to always use their own judgment when deciding to drive.
 
 - One-hand optimized drink selection
   
