@@ -210,6 +210,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                     drinkType = 'Beer';
                   });
 
+                  currentIndex = 1;
                   isBeer = true;
                   isWine = false;
                   isLiquor = false;
@@ -253,6 +254,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                     drinkType = 'Liquor';
                   });
 
+                  currentIndex = 2;
                   isLiquor = true;
                   isBeer = false;
                   isWine = false;
@@ -302,6 +304,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                     drinkType = 'Wine';
                   });
 
+                  currentIndex = 0;
                   isWine = true;
                   isBeer = false;
                   isLiquor = false;
