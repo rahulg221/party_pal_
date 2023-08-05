@@ -16,7 +16,7 @@ For college students, a grave issue in today's age is binge drinking. Many stude
 
 - Tolerance Scale
   
-  As the user uses the app, they may find it is not necessarily accurate for them because everyone processes alcohol differently. To alleviate this, they can now adjust their own tolerance scale to adjust the recommendation setting to their own needs. The tolerance scale will allow for a 1-20% increase or decrease in their limit setting, and the user is responsible for adjusting this as they see fit. 
+  As the user uses the app, they may find it may not be super accurate for them because everyone processes alcohol differently. To alleviate this, they can now adjust their own tolerance scale to adjust the recommendation setting to their own needs. The tolerance scale will allow for a 1-20% increase or decrease in their limit setting, and the user is responsible for adjusting this as they see fit. 
   
 - BAC calculation
   
