@@ -663,7 +663,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           child: FittedBox(
             fit: BoxFit.fitWidth,
             child: Text(
-              'BAC: ${bac.toStringAsFixed(6)}',
+              'BAC: ${bac.toStringAsFixed(3)}',
               style: Theme.of(context).textTheme.displayMedium,
             ),
           ),
