@@ -236,7 +236,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
               ),
             ),
           ),
-          const SizedBox(width: 6),
+          SizedBox(width: 4),
           Expanded(
             child: SizedBox(
               height: height * 0.05,
@@ -281,7 +281,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
               ),
             ),
           ),
-          const SizedBox(width: 6),
+          SizedBox(width: 4),
           Expanded(
             child: SizedBox(
               height: height * 0.05,
@@ -483,15 +483,15 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   ),
                 ),
               ),
-              SizedBox(width: 6),
+              SizedBox(width: 4),
               Column(
                 children: [
                   Align(
                     alignment: Alignment.centerRight,
                     child: Container(
                       width:
-                          (width - 32) / 2 - 3, // width - body column padding
-                      height: (height * 3 / 15) / 2 - 3,
+                          (width - 32) / 2 - 2, // width - body column padding
+                      height: (height * 3 / 15) / 2 - 2,
                       child: TextButton(
                         style: TextButton.styleFrom(
                           backgroundColor:
@@ -551,13 +551,13 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 6),
+                  SizedBox(height: 4),
                   Align(
                     alignment: Alignment.centerRight,
                     child: Container(
                       width:
-                          (width - 32) / 2 - 3, // width - body column padding
-                      height: (height * 3 / 15) / 2 - 3,
+                          (width - 32) / 2 - 2, // width - body column padding
+                      height: (height * 3 / 15) / 2 - 2,
                       child: TextButton(
                         style: TextButton.styleFrom(
                           backgroundColor:
@@ -623,13 +623,13 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
               ),
             ],
           ),
-          SizedBox(height: 6),
+          SizedBox(height: 4),
           Row(
             children: [
               Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
-                  width: (width - 32) / 2 - 3, // width - body column padding
+                  width: (width - 32) / 2 - 2, // width - body column padding
                   height: height * 0.06,
                   child: TextButton(
                     style: TextButton.styleFrom(
@@ -665,7 +665,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   ),
                 ),
               ),
-              SizedBox(width: 6),
+              SizedBox(width: 4),
               Align(
                 alignment: Alignment.centerRight,
                 child: Container(
@@ -858,10 +858,10 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 //Expanded(child: SizedBox(height: height * 0.1)),
                 SizedBox(height: height * 0.1),
                 _drinkSelector(height),
-                SizedBox(height: 6),
+                SizedBox(height: 4),
                 _inputPanel(width, height, weight, abv, oz, bac, recLevel,
                     legalLimit, tolerance, count, genderVal, unit),
-                SizedBox(height: 6),
+                SizedBox(height: 4),
               ],
             ),
           ),
