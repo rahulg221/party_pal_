@@ -170,6 +170,8 @@ class _MainPageState extends ConsumerState<MainPage> {
   @override
   Widget build(BuildContext context) {
     Color color = ref.watch(colorController);
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       bottomNavigationBar: Padding(
@@ -182,15 +184,15 @@ class _MainPageState extends ConsumerState<MainPage> {
           onTap: (newIndex) => pageController.jumpToPage(newIndex),
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.local_bar, size: 20),
+              icon: Icon(Icons.local_bar, size: height * 0.01 * 3),
               label: 'Add Drinks',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.access_time_outlined, size: 20),
+              icon: Icon(Icons.access_time_outlined, size: height * 0.01 * 3),
               label: 'Drink History',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.info, size: 20),
+              icon: Icon(Icons.info, size: height * 0.01 * 3),
               label: 'BAC Info',
             ),
             /*BottomNavigationBarItem(
