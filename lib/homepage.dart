@@ -236,7 +236,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
               ),
             ),
           ),
-          SizedBox(width: 4),
+          const SizedBox(width: 6),
           Expanded(
             child: SizedBox(
               height: height * 0.05,
@@ -281,7 +281,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
               ),
             ),
           ),
-          SizedBox(width: 4),
+          const SizedBox(width: 6),
           Expanded(
             child: SizedBox(
               height: height * 0.05,
@@ -483,15 +483,15 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   ),
                 ),
               ),
-              SizedBox(width: 4),
+              SizedBox(width: 6),
               Column(
                 children: [
                   Align(
                     alignment: Alignment.centerRight,
                     child: Container(
                       width:
-                          (width - 32) / 2 - 2, // width - body column padding
-                      height: (height * 3 / 15) / 2 - 2,
+                          (width - 32) / 2 - 3, // width - body column padding
+                      height: (height * 3 / 15) / 2 - 3,
                       child: TextButton(
                         style: TextButton.styleFrom(
                           backgroundColor:
@@ -551,13 +551,13 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 4),
+                  SizedBox(height: 6),
                   Align(
                     alignment: Alignment.centerRight,
                     child: Container(
                       width:
-                          (width - 32) / 2 - 2, // width - body column padding
-                      height: (height * 3 / 15) / 2 - 2,
+                          (width - 32) / 2 - 3, // width - body column padding
+                      height: (height * 3 / 15) / 2 - 3,
                       child: TextButton(
                         style: TextButton.styleFrom(
                           backgroundColor:
@@ -623,13 +623,13 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
               ),
             ],
           ),
-          SizedBox(height: 4),
+          SizedBox(height: 6),
           Row(
             children: [
               Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
-                  width: (width - 32) / 2 - 2, // width - body column padding
+                  width: (width - 32) / 2 - 3, // width - body column padding
                   height: height * 0.06,
                   child: TextButton(
                     style: TextButton.styleFrom(
@@ -665,7 +665,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   ),
                 ),
               ),
-              SizedBox(width: 4),
+              SizedBox(width: 6),
               Align(
                 alignment: Alignment.centerRight,
                 child: Container(
@@ -847,21 +847,19 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                //SizedBox(height: height * 0.08),
-                Expanded(child: SizedBox(height: height * 0.1)),
+                SizedBox(height: height * 0.1),
                 _countDisplay(
                     count,
                     color,
                     findRatio(recLevel, bac, legalLimit, tolerance),
                     width,
                     height),
-                //Expanded(child: SizedBox(height: height * 0.1)),
-                SizedBox(height: height * 0.1),
+                Expanded(child: SizedBox(height: height * 0.1)),
                 _drinkSelector(height),
-                SizedBox(height: 4),
+                SizedBox(height: 6),
                 _inputPanel(width, height, weight, abv, oz, bac, recLevel,
                     legalLimit, tolerance, count, genderVal, unit),
-                SizedBox(height: 4),
+                SizedBox(height: 6),
               ],
             ),
           ),
