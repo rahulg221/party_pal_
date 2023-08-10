@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lift_links/drive_alert.dart';
-import 'package:lift_links/homepage.dart';
 import 'package:lift_links/settings.dart';
 import 'package:lift_links/theme_config.dart';
 import 'main.dart';
-import 'package:intl/intl.dart';
 import 'package:lift_links/providers.dart';
 
 class MyFriendsPage extends ConsumerStatefulWidget {
@@ -58,7 +56,7 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
         color: MyApp.themeNotifier.value == ThemeMode.light
             ? Colors.white
             : Colors.black,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20.0),
             topRight: Radius.circular(20.0),
@@ -80,7 +78,7 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
                     : Colors.black,
               ],
             ),
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(20.0),
               topRight: Radius.circular(20.0),
             ),
@@ -181,13 +179,13 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
-                Expanded(child: SizedBox()),
+                const Expanded(child: SizedBox()),
                 Align(
                   alignment: Alignment.center,
                   child: Row(
                     children: [
                       Text(
-                        '${count.toStringAsFixed(1)}',
+                        count.toStringAsFixed(1),
                         style: Theme.of(context).textTheme.headlineLarge,
                       ),
                       const SizedBox(width: 8),
@@ -221,10 +219,10 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
         actions: [
           IconButton(
             icon: bac >= 0.08
-                ? Icon(
+                ? const Icon(
                     Icons.car_crash,
                   )
-                : Icon(
+                : const Icon(
                     Icons.directions_car,
                   ),
             iconSize: 25,
@@ -235,7 +233,7 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
                     (ref.watch(bacController) - legalLimit) / 0.015),
                 backgroundColor: ref
                     .watch(colorController), // Customize the background color
-                duration: Duration(seconds: 5),
+                duration: const Duration(seconds: 5),
                 bac: ref.watch(bacController), // Customize the duration
               );
 
@@ -243,7 +241,7 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
             },
           ),
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.settings,
             ),
             iconSize: 25,
@@ -262,16 +260,16 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
       body: Theme(
         data: ThemeData.dark(),
         child: Padding(
-          padding: EdgeInsets.only(top: 0.0),
+          padding: const EdgeInsets.only(top: 0.0),
           child: Center(
-            child: Container(
+            child: SizedBox(
               width: width - 12,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(height: 25),
+                  const SizedBox(height: 25),
                   _drinkDisplay(count, width, height),
-                  SizedBox(height: 25),
+                  const SizedBox(height: 25),
                   Padding(
                     padding: const EdgeInsets.only(left: 12.0),
                     child: Align(
@@ -283,7 +281,7 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
                           style: Theme.of(context).textTheme.headlineMedium),
                     ),
                   ),
-                  SizedBox(height: 5),
+                  const SizedBox(height: 5),
                   Expanded(child: _drinkList(width, height, drinks)),
                 ],
               ),

@@ -36,7 +36,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   bool isBeer = true;
   bool isWine = false;
   bool isLiquor = false;
-  double _kItemExtent = 32.0;
+  final double _kItemExtent = 32.0;
 
   String sizeDisplay = '1 Can';
 
@@ -116,7 +116,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   void startTimer() {
     print('Starting timer');
     // Start the timer when the button is pressed
-    timer = Timer.periodic(Duration(seconds: 1), (_) {
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
       // Make sure initialTime is not null before calling updateBac
       if (ref.watch(bacController) <= 0) {
         stopTimer();
@@ -355,8 +355,8 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 print('bac ratio: $bacRatio');
                 // Show the snack bar here.
                 final snackBar = SnackBar(
-                  duration: Duration(seconds: 3),
-                  shape: RoundedRectangleBorder(
+                  duration: const Duration(seconds: 3),
+                  shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(
                           20.0), // Adjust the top left corner radius here
@@ -369,7 +369,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       Align(
                         alignment: Alignment.topRight,
                         child: IconButton(
-                          icon: Icon(Icons.close),
+                          icon: const Icon(Icons.close),
                           onPressed: () {
                             // Close the SnackBar when the close button is pressed
                             ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -379,7 +379,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       ),
                       Text(
                           'You have consumed ${count.toStringAsFixed(1)} standard drinks.\n\nA standard drink is equivalent to:\n\n-12 ounces of beer at 5% ABV\n\n-5 ounces of wine at 12% ABV\n\n-1.5 oz of hard liquor at 40% ABV',
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold)),
                     ],
@@ -435,7 +435,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
         children: [
           Row(
             children: [
-              Container(
+              SizedBox(
                 width: (width - 32) / 2 - 3, // width - body column padding
                 height: height * 3 / 15,
                 child: TextButton(
@@ -483,12 +483,12 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   ),
                 ),
               ),
-              SizedBox(width: 6),
+              const SizedBox(width: 6),
               Column(
                 children: [
                   Align(
                     alignment: Alignment.centerRight,
-                    child: Container(
+                    child: SizedBox(
                       width:
                           (width - 32) / 2 - 3, // width - body column padding
                       height: (height * 3 / 15) / 2 - 3,
@@ -543,7 +543,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                               return Center(child: Text(_beerOzStr_[index]));
                             }
 
-                            return Center(child: Text('Error'));
+                            return const Center(child: Text('Error'));
                           }),
                         )),
                         child: Text(sizeDisplay,
@@ -551,10 +551,10 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 6),
+                  const SizedBox(height: 6),
                   Align(
                     alignment: Alignment.centerRight,
-                    child: Container(
+                    child: SizedBox(
                       width:
                           (width - 32) / 2 - 3, // width - body column padding
                       height: (height * 3 / 15) / 2 - 3,
@@ -611,7 +611,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                                   child: Text('${_beerAbv[index]} %'));
                             }
 
-                            return Center(child: Text('Error'));
+                            return const Center(child: Text('Error'));
                           }),
                         )),
                         child: Text('${ref.watch(abvController)} %',
@@ -623,12 +623,12 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
               ),
             ],
           ),
-          SizedBox(height: 6),
+          const SizedBox(height: 6),
           Row(
             children: [
               Align(
                 alignment: Alignment.centerLeft,
-                child: Container(
+                child: SizedBox(
                   width: (width - 32) / 2 - 3, // width - body column padding
                   height: height * 0.06,
                   child: TextButton(
@@ -665,10 +665,10 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   ),
                 ),
               ),
-              SizedBox(width: 6),
+              const SizedBox(width: 6),
               Align(
                 alignment: Alignment.centerRight,
-                child: Container(
+                child: SizedBox(
                   width: (width - 32) / 2 - 3, // width - body column padding
                   height: height * 0.06,
                   child: TextButton(
@@ -738,10 +738,10 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Warning',
+          title: const Text('Warning',
               style:
                   TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
-          content: Text(
+          content: const Text(
               'Please enter your information in settings before proceeding.',
               style:
                   TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
@@ -751,7 +751,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 // Add code here to handle the action when the user taps on the button
                 Navigator.of(context).pop(); // Close the dialog
               },
-              child: Text('OK',
+              child: const Text('OK',
                   style: TextStyle(
                       color: Colors.black, fontWeight: FontWeight.bold)),
             ),
@@ -794,10 +794,10 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
         actions: [
           IconButton(
             icon: bac >= 0.08
-                ? Icon(
+                ? const Icon(
                     Icons.car_crash,
                   )
-                : Icon(
+                : const Icon(
                     Icons.directions_car,
                   ),
             iconSize: 25,
@@ -808,7 +808,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                     (ref.watch(bacController) - legalLimit) / 0.015),
                 backgroundColor: ref
                     .watch(colorController), // Customize the background color
-                duration: Duration(seconds: 5),
+                duration: const Duration(seconds: 5),
                 bac: ref.watch(bacController), // Customize the duration
               );
 
@@ -816,7 +816,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             },
           ),
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.settings,
             ),
             iconSize: 25,
@@ -856,10 +856,10 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                     height),
                 Expanded(child: SizedBox(height: height * 0.1)),
                 _drinkSelector(height),
-                SizedBox(height: 6),
+                const SizedBox(height: 6),
                 _inputPanel(width, height, weight, abv, oz, bac, recLevel,
                     legalLimit, tolerance, count, genderVal, unit),
-                SizedBox(height: 6),
+                const SizedBox(height: 6),
               ],
             ),
           ),

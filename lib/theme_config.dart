@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lift_links/main.dart';
 
 String fontStyle = 'Karla';
 String fancyStyle = 'GreatVibes';

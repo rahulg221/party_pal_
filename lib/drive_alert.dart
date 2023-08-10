@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ReusableSnackBar extends SnackBar {
-  ReusableSnackBar({
+  ReusableSnackBar({super.key, 
     required BuildContext context,
     required String timeTillDrive,
     required double bac,
@@ -13,7 +13,7 @@ class ReusableSnackBar extends SnackBar {
               Align(
                 alignment: Alignment.topRight,
                 child: IconButton(
-                  icon: Icon(Icons.close),
+                  icon: const Icon(Icons.close),
                   onPressed: () {
                     // Close the SnackBar when the close button is pressed
                     ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -67,7 +67,7 @@ class ReusableSnackBar extends SnackBar {
                   height: 1,
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 'This is just an estimate, make sure to use your own judgment to determine if you should drive',
                 style: TextStyle(
@@ -79,7 +79,7 @@ class ReusableSnackBar extends SnackBar {
               ),
             ],
           ),
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30.0),
               topRight: Radius.circular(30.0),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lift_links/drive_alert.dart';
 import 'package:lift_links/settings.dart';
-import 'package:lift_links/theme_config.dart';
 import 'package:lift_links/main.dart';
 import 'package:lift_links/providers.dart';
 
@@ -103,7 +102,7 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
-                Expanded(child: SizedBox()),
+                const Expanded(child: SizedBox()),
                 Align(
                   alignment: Alignment.bottomLeft,
                   child: FittedBox(
@@ -173,10 +172,10 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
         actions: [
           IconButton(
             icon: bac >= 0.08
-                ? Icon(
+                ? const Icon(
                     Icons.car_crash,
                   )
-                : Icon(
+                : const Icon(
                     Icons.directions_car,
                   ),
             iconSize: 25,
@@ -187,7 +186,7 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
                     (ref.watch(bacController) - legalLimit) / 0.015),
                 backgroundColor: ref
                     .watch(colorController), // Customize the background color
-                duration: Duration(seconds: 5),
+                duration: const Duration(seconds: 5),
                 bac: ref.watch(bacController), // Customize the duration
               );
 
@@ -195,7 +194,7 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
             },
           ),
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.settings,
             ),
             iconSize: 25,
@@ -214,9 +213,9 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
       body: Theme(
         data: ThemeData.dark(),
         child: Padding(
-          padding: EdgeInsets.only(top: 0.0),
+          padding: const EdgeInsets.only(top: 0.0),
           child: Center(
-            child: Container(
+            child: SizedBox(
               width: width - 12,
               child: Scrollbar(
                 controller: _scrollController,
@@ -227,9 +226,9 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      SizedBox(height: 25),
+                      const SizedBox(height: 25),
                       _bacDisplay(bac, width, height),
-                      SizedBox(height: 25),
+                      const SizedBox(height: 25),
                       Padding(
                         padding: const EdgeInsets.only(left: 12.0),
                         child: Align(
@@ -239,9 +238,9 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
                                   Theme.of(context).textTheme.headlineMedium),
                         ),
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       _textContainer(height, width, commonEffects(bac)),
-                      SizedBox(height: 25),
+                      const SizedBox(height: 25),
                       Padding(
                         padding: const EdgeInsets.only(left: 12.0),
                         child: Align(
@@ -251,13 +250,13 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
                                   Theme.of(context).textTheme.headlineMedium),
                         ),
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       _textContainer(
                         height,
                         width,
                         'Blood Alcohol Concentration (BAC) refers to the percent of alcohol in your blood stream. The higher your BAC levels, the more impaired you may feel. Understanding your BAC level is important for making good choices when drinking.',
                       ),
-                      SizedBox(height: 25),
+                      const SizedBox(height: 25),
                       Padding(
                         padding: const EdgeInsets.only(left: 12.0),
                         child: Align(
@@ -267,13 +266,13 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
                                   Theme.of(context).textTheme.headlineMedium),
                         ),
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       _textContainer(
                         height,
                         width,
                         "Blood Alcohol Concentration (BAC) is most accurately measured by a blood test or a breathalyzer. This app utilizes a modified version of the Widmark's algorithm, which uses the user's gender, weight, and the drinking time span to calculate an estimated BAC level. This number is just an estimate, so never solely rely on this calculation to determine whether or not you should drive.",
                       ),
-                      SizedBox(height: 25),
+                      const SizedBox(height: 25),
                       Padding(
                         padding: const EdgeInsets.only(left: 12.0),
                         child: Align(
@@ -284,13 +283,13 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
                                   Theme.of(context).textTheme.headlineMedium),
                         ),
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       _textContainer(
                         height,
                         width,
                         "The legal BAC limit for driving varies by location, but it's commonly around 0.08%. If your BAC is equal to or higher than this, you could face legal consequences for driving under the influence.",
                       ),
-                      SizedBox(height: 25),
+                      const SizedBox(height: 25),
                       Padding(
                         padding: const EdgeInsets.only(left: 12.0),
                         child: Align(
@@ -300,13 +299,13 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
                                   Theme.of(context).textTheme.headlineMedium),
                         ),
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       _textContainer(
                         height,
                         width,
                         "Alcohol leaves your system at a rate of about 0.015% BAC per hour. Despite the popular belief that water and food can help you sober up faster, the only way to sober up is through time.",
                       ),
-                      SizedBox(height: 25),
+                      const SizedBox(height: 25),
                       Padding(
                         padding: const EdgeInsets.only(left: 12.0),
                         child: Align(
@@ -317,9 +316,9 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
                                   Theme.of(context).textTheme.headlineMedium),
                         ),
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       _textContainer(height, width,
-                          "At BAC levels upwards of 0.30%, alcohol poisoning is possible.\n\nSigns of alcohol poisoning include confusion, vomiting, slow or irregular breathing, and passing out. If you or someone else shows these signs after drinking, seek immediate medical help.\n\nWhat you should do:\n\n• Place them on their side in the recovery position to prevent choking on vomit.\n\n• Stay with them and make sure they stay awake.\n\n• Provide them with sips of water and keep them hydrated.\n\n• Keep them warm by covering them with a warm blanket or clothing to prevent hypothermia.\n\n• Provide medical professionals with information about the person's alcohol consumption, any medications they may be taking, and their medical history if possible."),
+                          "Signs of alcohol poisoning include confusion, vomiting, slow or irregular breathing, and passing out. If you or someone else shows these signs after drinking, seek immediate medical help. Until help arrives, place them on their side, and keep them warm and hydrated."),
                     ],
                   ),
                 ),

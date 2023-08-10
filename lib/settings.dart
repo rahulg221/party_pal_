@@ -67,7 +67,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
 
   Widget _genderButton(double width, double height) => Row(
         children: [
-          Container(
+          SizedBox(
             width: (width - 32) / 2 - 3, // width - body column padding
             height: 50,
             child: TextButton(
@@ -101,8 +101,8 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                               : Colors.white)),
             ),
           ),
-          SizedBox(width: 6),
-          Container(
+          const SizedBox(width: 6),
+          SizedBox(
             width: (width - 32) / 2 - 3, // width - body column padding
             height: 50,
             child: TextButton(
@@ -140,7 +140,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
 
   Widget _unitButtons(double width, double height) => Row(
         children: [
-          Container(
+          SizedBox(
             width: (width - 32) / 2 - 3, // width - body column padding
             height: 50,
             child: TextButton(
@@ -173,8 +173,8 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                               : Colors.white)),
             ),
           ),
-          SizedBox(width: 6),
-          Container(
+          const SizedBox(width: 6),
+          SizedBox(
             width: (width - 32) / 2 - 3, // width - body column padding
             height: 50,
             child: TextButton(
@@ -220,7 +220,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
           int recLevel,
           double tolerance,
           int unit) =>
-      Container(
+      SizedBox(
         width: (width - 32), // width - body column padding
         height: 60,
         child: TextButton(
@@ -252,7 +252,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
 
   Widget _recLevel(double width, double height, ThemeMode theme) => Row(
         children: [
-          Container(
+          SizedBox(
             width: (width - 32) / 3 - 8, // width - body column padding
             height: 50,
             child: TextButton(
@@ -285,8 +285,8 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                               : Colors.white)),
             ),
           ),
-          Spacer(),
-          Container(
+          const Spacer(),
+          SizedBox(
             width: (width - 32) / 3 - 8, // width - body column padding
             height: 50,
             child: TextButton(
@@ -319,8 +319,8 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                               : Colors.white)),
             ),
           ),
-          Spacer(),
-          Container(
+          const Spacer(),
+          SizedBox(
             width: (width - 32) / 3 - 8, // width - body column padding
             height: 50,
             child: TextButton(
@@ -353,7 +353,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                               : Colors.white)),
             ),
           ),
-          SizedBox(width: 6),
+          const SizedBox(width: 6),
         ],
       );
 
@@ -409,7 +409,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                 : Colors.white,
           ),
         ),
-        keyboardType: TextInputType.numberWithOptions(decimal: true),
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: <TextInputFormatter>[
           FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d*')),
         ],
@@ -421,8 +421,8 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
           inactiveTrackColor: ref.watch(colorController).withOpacity(0.3),
           thumbColor: ref.watch(colorController),
           overlayColor: ref.watch(colorController),
-          thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15.0),
-          overlayShape: RoundSliderOverlayShape(overlayRadius: 20.0),
+          thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 15.0),
+          overlayShape: const RoundSliderOverlayShape(overlayRadius: 20.0),
           trackHeight: 16.0,
         ),
         child: Slider(
@@ -445,7 +445,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
 
           final snackBar = SnackBar(
             duration: Duration(seconds: duration),
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(
                     20.0), // Adjust the top left corner radius here
@@ -458,7 +458,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                 Align(
                   alignment: Alignment.topRight,
                   child: IconButton(
-                    icon: Icon(Icons.close),
+                    icon: const Icon(Icons.close),
                     onPressed: () {
                       // Close the SnackBar when the close button is pressed
                       ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -467,7 +467,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                   ),
                 ),
                 Text(message,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.black)),
@@ -510,7 +510,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
             )),
         actions: [
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.refresh,
             ),
             iconSize: 25,
@@ -533,7 +533,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
               }),
         ],
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
           ),
           iconSize: 20,
@@ -554,7 +554,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
             children: [
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.only(top: 0.0),
+                  padding: const EdgeInsets.only(top: 0.0),
                   alignment: Alignment.topCenter,
                   width: width - 32,
                   child: SingleChildScrollView(
@@ -562,7 +562,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5.0),
@@ -582,9 +582,9 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                                         .displayMedium),
                               ),
                             )),
-                        SizedBox(height: 25),
+                        const SizedBox(height: 25),
                         _genderButton(width, height),
-                        SizedBox(height: 25),
+                        const SizedBox(height: 25),
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5.0),
@@ -605,9 +605,9 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 25),
+                        const SizedBox(height: 25),
                         _unitButtons(width, height),
-                        SizedBox(height: 25),
+                        const SizedBox(height: 25),
                         Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5.0),
@@ -627,10 +627,10 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                                         .displayMedium),
                               ),
                             )),
-                        SizedBox(height: 25),
+                        const SizedBox(height: 25),
                         _textField('Please enter your age in years.', 'Age',
                             age, unit),
-                        SizedBox(height: 25),
+                        const SizedBox(height: 25),
                         Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5.0),
@@ -650,7 +650,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                                         .displayMedium),
                               ),
                             )),
-                        SizedBox(height: 25),
+                        const SizedBox(height: 25),
                         _textField(
                             unit == 1
                                 ? 'Please enter your weight in kgs.'
@@ -658,7 +658,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                             'Weight',
                             weight,
                             unit),
-                        SizedBox(height: 25),
+                        const SizedBox(height: 25),
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5.0),
@@ -688,10 +688,10 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 25),
+                        const SizedBox(height: 25),
                         _textField('Please enter the legal driving limit.',
                             'Legal Limit', legalLimit, unit),
-                        SizedBox(height: 25),
+                        const SizedBox(height: 25),
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5.0),
@@ -721,7 +721,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 25),
+                        const SizedBox(height: 25),
                         _recLevel(
                           width,
                           height,
@@ -729,7 +729,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                               ? ThemeMode.light
                               : ThemeMode.dark,
                         ),
-                        SizedBox(height: 25),
+                        const SizedBox(height: 25),
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5.0),
@@ -759,9 +759,9 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 25),
+                        const SizedBox(height: 25),
                         _tSlider(tolerance),
-                        Container(
+                        SizedBox(
                           width: width - 64,
                           child: Center(
                             child: Row(
@@ -769,12 +769,12 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                                 Text('Low', //${tolerance.toStringAsFixed(0)}
                                     style:
                                         Theme.of(context).textTheme.bodySmall),
-                                Spacer(),
+                                const Spacer(),
                                 Text(
                                     'Average', //${tolerance.toStringAsFixed(0)}
                                     style:
                                         Theme.of(context).textTheme.bodySmall),
-                                Spacer(),
+                                const Spacer(),
                                 Text('High', //${tolerance.toStringAsFixed(0)}
                                     style:
                                         Theme.of(context).textTheme.bodySmall),
@@ -782,16 +782,19 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 25),
+                        const SizedBox(height: 25),
                       ],
                     ),
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: _saveButton(width, height, weight, age, legalLimit,
-                    genderVal, recLevel, tolerance, unit),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: _saveButton(width, height, weight, age, legalLimit,
+                      genderVal, recLevel, tolerance, unit),
+                ),
               ),
             ],
           ),

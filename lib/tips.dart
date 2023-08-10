@@ -34,15 +34,15 @@ class _MyTipsPageState extends ConsumerState<MyTipsPage> {
         actions: [
           IconButton(
             icon: bac >= 0.08
-                ? Icon(Icons.car_crash)
-                : Icon(Icons.directions_car),
+                ? const Icon(Icons.car_crash)
+                : const Icon(Icons.directions_car),
             iconSize: 25,
             onPressed: () {
               // Navigating to the MyProfilePage when the settings icon is tapped
             },
           ),
           IconButton(
-            icon: Icon(Icons.settings),
+            icon: const Icon(Icons.settings),
             iconSize: 25,
             onPressed: () {
               // Navigating to the MyProfilePage when the settings icon is tapped
@@ -60,7 +60,7 @@ class _MyTipsPageState extends ConsumerState<MyTipsPage> {
         data: ThemeData.dark(),
         child: Center(
           child: Container(
-            padding: EdgeInsets.only(top: 0.0),
+            padding: const EdgeInsets.only(top: 0.0),
             width: width - 12,
             child: const Scrollbar(
               thumbVisibility: true,

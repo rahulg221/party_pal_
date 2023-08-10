@@ -4,10 +4,8 @@ import 'package:lift_links/history.dart';
 import 'package:lift_links/homepage.dart';
 import 'package:lift_links/providers.dart';
 import 'package:lift_links/theme_config.dart';
-import 'package:lift_links/tips.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/services.dart';
 
 class LifeCycle extends ConsumerStatefulWidget {
@@ -62,7 +60,7 @@ void main() {
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-  runApp(ProviderScope(
+  runApp(const ProviderScope(
     child: MyApp(),
   ));
 }
@@ -71,7 +69,7 @@ class MyApp extends ConsumerWidget {
   static final ValueNotifier<ThemeMode> themeNotifier =
       ValueNotifier(ThemeMode.light);
 
-  MyApp({super.key});
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -93,7 +91,7 @@ class MyApp extends ConsumerWidget {
               MediaQuery.of(context).size.height,
             ),
             themeMode: currentMode,
-            home: LifeCycle(
+            home: const LifeCycle(
               child: MainPage(
                 title: 'Party Pal App',
               ),
