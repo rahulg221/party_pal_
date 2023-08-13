@@ -17,12 +17,14 @@ class MyInfoPage extends ConsumerStatefulWidget {
 class _MyInfoPageState extends ConsumerState<MyInfoPage> {
   final ScrollController _scrollController = ScrollController();
 
+  //Changes to other theme option
   void toggleTheme() {
     MyApp.themeNotifier.value = MyApp.themeNotifier.value == ThemeMode.light
         ? ThemeMode.dark
         : ThemeMode.light;
   }
 
+  //Converts hours to Hours:Minutes format
   String convertToHoursMinutes(double timeInHours) {
     int hours = timeInHours.toInt();
     int minutes = ((timeInHours - hours) * 60).round();
@@ -32,46 +34,39 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
       minutes = 0;
     }
 
-    // Pad hours with leading zero if needed
     String paddedHours = hours.toString().padLeft(2, '0');
-
-    // Pad minutes with leading zero if needed
     String paddedMinutes = minutes.toString().padLeft(2, '0');
 
     return '$paddedHours:$paddedMinutes';
   }
 
+  //Returns different common effects when BAC reaches different levels
   String commonEffects(double bac) {
     if (bac < 0.02) {
       return "Nothing. You're basically sober.";
     } else if (bac >= 0.02 && bac < 0.05) {
       return '• muscle relaxation\n• altered mood\n• increased body warmth\n• decline in visual function\n• diminished capacity to multitask\n• loss of judgment';
-      //return 'This is the lowest level of intoxication with some measurable impact on the brain and body. You will feel relaxed, experience altered mood, feel a little warmer, and may make poor judgments.';
     } else if (bac >= 0.05 && bac < 0.08) {
       return '• loss of fine motor control\n• exaggerated behavior\n• reduced coordination\n• lowered reaction time\n• impaired judgment\n• low alertness\n• heightened mood\n• lack of inhibition';
-      //return 'At this level of BAC, your behavior will may become exaggerated. You may speak louder and gesture more. You may also begin to lose control of small muscles, like the ability to focus your eyes, so vision will become blurry.';
     } else if (bac >= 0.08 && bac < 0.10) {
       return '• small and large motor function decline\n• poor hearing, seeing, speaking, and coordination\n• short-term memory loss\n• inability to concentrate\n• impaired perception\n• reduced cognitive processing speed';
-      //return 'This is the current legal limit in the U.S., other than Utah, and at this level it is considered illegal and unsafe to drive. You will lose more coordination, so your balance, speech, reaction times, and even hearing will get worse.';
     } else if (bac >= 0.10 && bac < 0.15) {
       return '• noticeable lack of reaction time\n• slurred speech\n• slowed thinking\n• poor coordination';
-      //return 'At this BAC, reaction time and control will be reduced, speech will be slurred, thinking and reasoning are slower, and the ability to coordinate your arms and legs is poor.';
     } else if (bac >= 0.15) {
       return '• major loss of motor control\n• poor or no balance\n• severe attention and reaction deficits\n• inability to cognitively process sounds or visuals\n• nausea or vomiting';
-      //return 'This BAC is very high. You will have much less control over your balance and voluntary muscles, so walking and talking are difficult. You may fall and hurt yourself.';
     }
 
     return '';
   }
 
+  //Widget to display BAC
   Widget _bacDisplay(double bac, double width, double height) => Material(
         elevation: 6,
         color: MyApp.themeNotifier.value == ThemeMode.light
             ? Colors.white
             : Colors.black,
         shape: RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.circular(20), // Adjust the radius as needed
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Container(
           width: width - 32,
@@ -119,14 +114,14 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
         ),
       );
 
+  //Reusable text widget to display different pieces of information
   Widget _textContainer(double height, double width, String text) => Material(
         elevation: 6,
         color: MyApp.themeNotifier.value == ThemeMode.light
             ? Colors.white
             : Colors.black,
         shape: RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.circular(20), // Adjust the radius as needed
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Container(
           width: width - 32,
@@ -184,10 +179,9 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
                 context: context,
                 timeTillDrive: convertToHoursMinutes(
                     (ref.watch(bacController) - legalLimit) / 0.015),
-                backgroundColor: ref
-                    .watch(colorController), // Customize the background color
+                backgroundColor: ref.watch(colorController),
                 duration: const Duration(seconds: 5),
-                bac: ref.watch(bacController), // Customize the duration
+                bac: ref.watch(bacController),
               );
 
               ScaffoldMessenger.of(context).showSnackBar(driveAlert);
@@ -199,7 +193,6 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
             ),
             iconSize: 25,
             onPressed: () {
-              // Navigating to the MyProfilePage when the settings icon is tapped
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -307,15 +300,14 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
                       ),
                       const SizedBox(height: 25),
                       Padding(
-                        padding: const EdgeInsets.only(left: 12.0),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                              'What are the signs of alcohol poisoning?',
-                              style:
-                                  Theme.of(context).textTheme.headlineMedium),
-                        ),
-                      ),
+                          padding: const EdgeInsets.only(left: 12.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                                'What are the signs of alcohol poisoning?',
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium),
+                          )),
                       const SizedBox(height: 5),
                       _textContainer(height, width,
                           "Signs of alcohol poisoning include confusion, vomiting, slow or irregular breathing, and passing out. If you or someone else shows these signs after drinking, seek immediate medical help. Until help arrives, place them on their side, and keep them warm and hydrated."),

@@ -20,12 +20,14 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
 
   String? selectedValue;
 
+  //Changes to other theme option
   void toggleTheme() {
     MyApp.themeNotifier.value = MyApp.themeNotifier.value == ThemeMode.light
         ? ThemeMode.dark
         : ThemeMode.light;
   }
 
+  //Saves info to shared preferences
   void saveInfo(double genderVal, double weight, double age, double legalLimit,
       int recLevel, double tolerance, int unit) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -45,6 +47,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
     prefs.setInt('unit', unit);
   }
 
+  //Sets all values to 0 and saves to shared preferences
   void resetInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -65,20 +68,20 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
     prefs.setInt('unit', 0);
   }
 
+  //Widget for selecting gender
   Widget _genderButton(double width, double height) => Row(
         children: [
           SizedBox(
-            width: (width - 32) / 2 - 3, // width - body column padding
+            width: (width - 32) / 2 - 3,
             height: 50,
             child: TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: ref.watch(genderController) == 0.68
                     ? ref.watch(colorController)
-                    : Colors.transparent, // Change the background color here
+                    : Colors.transparent,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0)),
                 side: BorderSide(
-                    // Gets rid of border when selected
                     color: MyApp.themeNotifier.value == ThemeMode.light
                         ? ref.watch(genderController) == 0.68
                             ? Colors.transparent
@@ -103,13 +106,13 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
           ),
           const SizedBox(width: 6),
           SizedBox(
-            width: (width - 32) / 2 - 3, // width - body column padding
+            width: (width - 32) / 2 - 3,
             height: 50,
             child: TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: ref.watch(genderController) == 0.55
                     ? ref.watch(colorController)
-                    : Colors.transparent, // Change the background color here
+                    : Colors.transparent,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0)),
                 side: BorderSide(
@@ -138,16 +141,17 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
         ],
       );
 
+  //Widget for selecting unit Imperial/Metric
   Widget _unitButtons(double width, double height) => Row(
         children: [
           SizedBox(
-            width: (width - 32) / 2 - 3, // width - body column padding
+            width: (width - 32) / 2 - 3,
             height: 50,
             child: TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: ref.watch(unitController) == 2
                     ? ref.watch(colorController)
-                    : Colors.transparent, // Change the background color here
+                    : Colors.transparent,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0)),
                 side: BorderSide(
@@ -175,13 +179,13 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
           ),
           const SizedBox(width: 6),
           SizedBox(
-            width: (width - 32) / 2 - 3, // width - body column padding
+            width: (width - 32) / 2 - 3,
             height: 50,
             child: TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: ref.watch(unitController) == 1
                     ? ref.watch(colorController)
-                    : Colors.transparent, // Change the background color here
+                    : Colors.transparent,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0)),
                 side: BorderSide(
@@ -210,6 +214,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
         ],
       );
 
+  //Widget for the save button
   Widget _saveButton(
           double width,
           double height,
@@ -221,12 +226,11 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
           double tolerance,
           int unit) =>
       SizedBox(
-        width: (width - 32), // width - body column padding
+        width: (width - 32),
         height: 60,
         child: TextButton(
           style: TextButton.styleFrom(
-            backgroundColor:
-                ref.watch(colorController), // Change the background color here
+            backgroundColor: ref.watch(colorController),
           ),
           onPressed: () {
             print('Weight: $weight');
@@ -250,16 +254,17 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
         ),
       );
 
+  //Widget for selecting recommendation level Light, Heavy, Moderate
   Widget _recLevel(double width, double height, ThemeMode theme) => Row(
         children: [
           SizedBox(
-            width: (width - 32) / 3 - 8, // width - body column padding
+            width: (width - 32) / 3 - 8,
             height: 50,
             child: TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: ref.watch(recController) == 1
                     ? ref.watch(colorController)
-                    : Colors.transparent, // Change the background color here
+                    : Colors.transparent,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0)),
                 side: BorderSide(
@@ -287,13 +292,13 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
           ),
           const Spacer(),
           SizedBox(
-            width: (width - 32) / 3 - 8, // width - body column padding
+            width: (width - 32) / 3 - 8,
             height: 50,
             child: TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: ref.watch(recController) == 2
                     ? ref.watch(colorController)
-                    : Colors.transparent, // Change the background color here
+                    : Colors.transparent,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0)),
                 side: BorderSide(
@@ -321,13 +326,13 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
           ),
           const Spacer(),
           SizedBox(
-            width: (width - 32) / 3 - 8, // width - body column padding
+            width: (width - 32) / 3 - 8,
             height: 50,
             child: TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: ref.watch(recController) == 3
                     ? ref.watch(colorController)
-                    : Colors.transparent, // Change the background color here
+                    : Colors.transparent,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5.0)),
                 side: BorderSide(
@@ -357,6 +362,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
         ],
       );
 
+  //Widget for reusable text fields for Age, Weight, Legal Limit
   Widget _textField(
           String hintText, String labelText, double value, int unit) =>
       TextField(
@@ -375,7 +381,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
 
               case 'Weight':
                 double newWeight = double.parse(newValue);
-                ref.read(weightController.notifier).setWeight(newWeight, unit);
+                ref.read(weightController.notifier).setWeight(newWeight);
                 break;
 
               case 'Legal Limit':
@@ -386,7 +392,6 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
           });
         },
         decoration: InputDecoration(
-          labelText: labelText,
           hintText: value == 0 ? hintText : '$value',
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
@@ -415,6 +420,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
         ],
       );
 
+  //Widget for tolerance scale slider
   Widget _tSlider(double currentTol) => SliderTheme(
         data: SliderTheme.of(context).copyWith(
           activeTrackColor: ref.watch(colorController),
@@ -439,10 +445,9 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
         ),
       );
 
+  //Widget for reusable info icons
   Widget _infoIcon(String message, int duration) => GestureDetector(
         onTap: () {
-          // Show the snack bar here.
-
           final snackBar = SnackBar(
             duration: Duration(seconds: duration),
             shape: const RoundedRectangleBorder(
@@ -539,13 +544,11 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
           iconSize: 20,
           onPressed: () {
             Navigator.pop(context);
-            // Passing the variable back to the previous page when the arrow back icon is tapped
-            //Navigator.pop(context, _variableFromProfile);
           },
         ),
         backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
             ? ref.watch(colorController)
-            : Colors.black, // over rules theme
+            : Colors.black,
       ),
       body: Theme(
         data: ThemeData.dark(),
@@ -671,7 +674,6 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Stack(
-                              // Use Stack to overlay widgets.
                               children: [
                                 Center(
                                   child: Text(
@@ -704,7 +706,6 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Stack(
-                              // Use Stack to overlay widgets.
                               children: [
                                 Center(
                                   child: Text(
@@ -715,8 +716,8 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                                   ),
                                 ),
                                 _infoIcon(
-                                    'Select a level based on your goal for the night.\n\nLight - Pick this setting if you plan to drive home tonight.\n\nModerate - Pick this setting for most situations where you are NOT driving.\n\nHeavy - Pick this setting if you want to get absolutely wasted - but safely.',
-                                    10)
+                                    'Light - This setting will cut you off slightly before you reach the legal driving limit. Ideal for a few drinks with dinner.\n\nModerate - This setting will cut you off at a 0.11% BAC with an average tolerance level. Perfect drunk for a night out with friends.\n\nHeavy - This setting will cut you off at a 0.14% BAC with an average tolerance level. Pick this if you want to get wasted, but safely.',
+                                    12)
                               ],
                             ),
                           ),
@@ -742,7 +743,6 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Stack(
-                              // Use Stack to overlay widgets.
                               children: [
                                 Center(
                                   child: Text(
@@ -753,8 +753,8 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                                   ),
                                 ),
                                 _infoIcon(
-                                    'Use this tolerance scale to finely tune your recommendation system.\n\nIf you feel that the recommendation system stops you too early, increase your tolerance scale and vice versa.',
-                                    6)
+                                    'Use this tolerance scale to finely tune your recommendation system.\n\nIf you feel that the recommendation system is not accurate for you, you can raise or lower your BAC cut-off by up to 20% with this slider.',
+                                    10)
                               ],
                             ),
                           ),
@@ -766,16 +766,15 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                           child: Center(
                             child: Row(
                               children: [
-                                Text('Low', //${tolerance.toStringAsFixed(0)}
+                                Text('Low',
                                     style:
                                         Theme.of(context).textTheme.bodySmall),
                                 const Spacer(),
-                                Text(
-                                    'Average', //${tolerance.toStringAsFixed(0)}
+                                Text('Average',
                                     style:
                                         Theme.of(context).textTheme.bodySmall),
                                 const Spacer(),
-                                Text('High', //${tolerance.toStringAsFixed(0)}
+                                Text('High',
                                     style:
                                         Theme.of(context).textTheme.bodySmall),
                               ],
@@ -788,13 +787,10 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                   ),
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: _saveButton(width, height, weight, age, legalLimit,
-                      genderVal, recLevel, tolerance, unit),
-                ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: _saveButton(width, height, weight, age, legalLimit,
+                    genderVal, recLevel, tolerance, unit),
               ),
             ],
           ),

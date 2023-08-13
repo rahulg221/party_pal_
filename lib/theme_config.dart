@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
+//Variables for easily changing font-style
 String fontStyle = 'Karla';
 String fancyStyle = 'GreatVibes';
 
 ThemeData createLightTheme(Color textColor, double width, double height) {
+  //Used to have dynamic text size based on screen size
   final textScale = height * 0.01;
+
   return ThemeData(
     useMaterial3: true,
     scaffoldBackgroundColor: Colors.white,
@@ -122,7 +125,9 @@ ThemeData createLightTheme(Color textColor, double width, double height) {
 }
 
 ThemeData createDarkTheme(Color textColor, double width, double height) {
+  //Used to have dynamic text size based on screen size
   final textScale = height * 0.01;
+
   return ThemeData(
     useMaterial3: true,
     scaffoldBackgroundColor: Colors.black,
@@ -223,13 +228,11 @@ ThemeData createDarkTheme(Color textColor, double width, double height) {
           fontSize: textScale * 2.5,
           fontFamily: fontStyle,
         ),
-        //backgroundColor: Colors.black,
         toolbarHeight: height * 1 / 15,
         backgroundColor: Colors.transparent),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: Colors.black,
       elevation: 0.0,
-      //backgroundColor: selectedItem,
       selectedItemColor: textColor,
       unselectedItemColor: Colors.grey,
     ),

@@ -10,9 +10,6 @@ import 'package:activity_ring/activity_ring.dart';
 import 'package:lift_links/theme_config.dart';
 import 'package:lift_links/providers.dart';
 
-//testing
-final List<Drink> drinks = [];
-
 class MyHomePage extends ConsumerStatefulWidget {
   const MyHomePage({super.key, required this.title});
 
@@ -23,8 +20,6 @@ class MyHomePage extends ConsumerStatefulWidget {
 }
 
 class _MyHomePageState extends ConsumerState<MyHomePage> {
-  Timer? timer;
-
   String drinkType = 'Beer';
   int ozLength = 3;
   int abvLength = 6;
@@ -89,12 +84,14 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
     '1 Large Can (16 oz / 473 ml)',
   ];
 
+  //Changes to other theme option
   void toggleTheme() {
     MyApp.themeNotifier.value = MyApp.themeNotifier.value == ThemeMode.light
         ? ThemeMode.dark
         : ThemeMode.light;
   }
 
+  //Converts hours to Hours:Minutes format
   String convertToHoursMinutes(double timeInHours) {
     int hours = timeInHours.toInt();
     int minutes = ((timeInHours - hours) * 60).round();
@@ -104,20 +101,16 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
       minutes = 0;
     }
 
-    // Pad hours with leading zero if needed
     String paddedHours = hours.toString().padLeft(2, '0');
-
-    // Pad minutes with leading zero if needed
     String paddedMinutes = minutes.toString().padLeft(2, '0');
 
     return '$paddedHours:$paddedMinutes';
   }
 
+  //Starts timer to decrement BAC every second the app is active
   void startTimer() {
-    print('Starting timer');
-    // Start the timer when the button is pressed
+    print('timer started');
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      // Make sure initialTime is not null before calling updateBac
       if (ref.watch(bacController) <= 0) {
         stopTimer();
       } else {
@@ -126,29 +119,24 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
     });
   }
 
+  //Stops timer
   void stopTimer() {
-    // Check if the timer is not null and active before stopping
+    print('timer stopped');
     if (timer != null && timer!.isActive) {
-      print('Stopping timer');
-      // Stop the timer by canceling it
       timer!.cancel();
-      // Set the timer variable to null to indicate it has been stopped
       timer = null;
     }
   }
 
-  //Finds ratio for ring percentage
+  //Calculates ratio of current BAC / max BAC limit to determine Ring percentage
   double findRatio(
       int recLevel, double bac, double legalLimit, double tolerance) {
     if (recLevel == 1) {
-      //return legalLimit * (weight * 454 * genderVal) / 1400;
-      return bac / legalLimit;
+      return bac / (legalLimit - 0.02);
     } else if (recLevel == 2) {
-      //return (0.11 * tolerance) * (weight * 454 * genderVal) / 1400 ;
-      return bac / (0.14 * tolerance);
+      return bac / (0.11 * tolerance);
     } else if (recLevel == 3) {
-      //return (0.14 * tolerance) * (weight * 454 * genderVal) / 1400;
-      return bac / (0.17 * tolerance);
+      return bac / (0.14 * tolerance);
     }
 
     return 0.0;
@@ -156,25 +144,21 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
 
   @override
   void dispose() {
-    // Cancel the timer and dispose of it when the widget is disposed
     timer?.cancel();
     super.dispose();
   }
 
+  //Opens size/percentage selector
   void _showDialog(Widget child) {
     showCupertinoModalPopup<void>(
       context: context,
       builder: (BuildContext context) => Container(
         height: 216,
         padding: const EdgeInsets.only(top: 6.0),
-        // The Bottom margin is provided to align the popup above the system navigation bar.
         margin: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
-        // Provide a background color for the popup.
-
         color: CupertinoColors.systemBackground.resolveFrom(context),
-        // Use a SafeArea widget to avoid system overlaps.
         child: SafeArea(
           top: false,
           child: child,
@@ -183,6 +167,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
     );
   }
 
+  //Widget for selecting Beer, Liquor, or Wine
   Widget _drinkSelector(double height) => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -236,7 +221,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
               ),
             ),
           ),
-          const SizedBox(width: 6),
+          const SizedBox(width: 4),
           Expanded(
             child: SizedBox(
               height: height * 0.05,
@@ -281,7 +266,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
               ),
             ),
           ),
-          const SizedBox(width: 6),
+          const SizedBox(width: 4),
           Expanded(
             child: SizedBox(
               height: height * 0.05,
@@ -335,12 +320,12 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
         ],
       );
 
+  //Widget for Ring and standard drink count display
   Widget _countDisplay(double count, Color color, double bacRatio, double width,
           double height) =>
       Stack(
         alignment: const Alignment(0.6, 0.6),
         children: [
-          // Sets to 100 if percent goes over 100, sets to 0 if percent goes negative
           Ring(
             percent: (bacRatio) < 1
                 ? (bacRatio * 100) > 0
@@ -352,16 +337,12 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             width: 13,
             child: GestureDetector(
               onTap: () {
-                print('bac ratio: $bacRatio');
-                // Show the snack bar here.
                 final snackBar = SnackBar(
                   duration: const Duration(seconds: 3),
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(
-                          20.0), // Adjust the top left corner radius here
-                      topRight: Radius.circular(
-                          20.0), // Adjust the top right corner radius here
+                      topLeft: Radius.circular(20.0),
+                      topRight: Radius.circular(20.0),
                     ),
                   ),
                   content: Column(
@@ -371,7 +352,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                         child: IconButton(
                           icon: const Icon(Icons.close),
                           onPressed: () {
-                            // Close the SnackBar when the close button is pressed
                             ScaffoldMessenger.of(context).hideCurrentSnackBar();
                           },
                           color: Colors.black,
@@ -418,6 +398,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
         ],
       );
 
+  //Widget for inputting drinks and undo/refresh
   Widget _inputPanel(
           double width,
           double height,
@@ -436,22 +417,22 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           Row(
             children: [
               SizedBox(
-                width: (width - 32) / 2 - 3, // width - body column padding
+                width: (width - 32) / 2 - 3,
                 height: height * 3 / 15,
                 child: TextButton(
                   style: TextButton.styleFrom(
                     backgroundColor:
                         MyApp.themeNotifier.value == ThemeMode.light
                             ? Colors.black.withOpacity(0.2)
-                            : Colors.white.withOpacity(
-                                0.1), // Change the background color here
+                            : Colors.white.withOpacity(0.1),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0)),
                   ),
                   onPressed: () {
-                    if (count == 0) {
+                    if (ref.watch(countController) == 0) {
                       startTimer();
                     }
+
                     if (weight != 0.0 &&
                         genderVal != 0.0 &&
                         recLevel != 0 &&
@@ -463,9 +444,11 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       ref.read(bacController.notifier).updateBac(
                           weight, genderVal, localc, ref.watch(unitController));
 
-                      ref
-                          .read(colorController.notifier)
-                          .changeColor(bac, recLevel, legalLimit, tolerance);
+                      ref.read(colorController.notifier).changeColor(
+                          ref.watch(bacController),
+                          recLevel,
+                          legalLimit,
+                          tolerance);
 
                       ref
                           .read(drinkController.notifier)
@@ -483,22 +466,20 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   ),
                 ),
               ),
-              const SizedBox(width: 6),
+              const SizedBox(width: 4),
               Column(
                 children: [
                   Align(
                     alignment: Alignment.centerRight,
                     child: SizedBox(
-                      width:
-                          (width - 32) / 2 - 3, // width - body column padding
-                      height: (height * 3 / 15) / 2 - 3,
+                      width: (width - 32) / 2 - 2,
+                      height: (height * 3 / 15) / 2 - 2,
                       child: TextButton(
                         style: TextButton.styleFrom(
                           backgroundColor:
                               MyApp.themeNotifier.value == ThemeMode.light
                                   ? Colors.black.withOpacity(0.1)
-                                  : Colors.white.withOpacity(
-                                      0.2), // Change the background color here
+                                  : Colors.white.withOpacity(0.2),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16.0),
                           ),
@@ -508,11 +489,9 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                           squeeze: 1.2,
                           useMagnifier: true,
                           itemExtent: _kItemExtent,
-                          // This sets the initial item.
                           scrollController: FixedExtentScrollController(
                             initialItem: currentIndex,
                           ),
-                          // This is called when selected item is changed.
                           onSelectedItemChanged: (int selectedItemIndex) {
                             currentIndex = selectedItemIndex;
 
@@ -551,20 +530,18 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 6),
+                  const SizedBox(height: 4),
                   Align(
                     alignment: Alignment.centerRight,
                     child: SizedBox(
-                      width:
-                          (width - 32) / 2 - 3, // width - body column padding
-                      height: (height * 3 / 15) / 2 - 3,
+                      width: (width - 32) / 2 - 2,
+                      height: (height * 3 / 15) / 2 - 2,
                       child: TextButton(
                         style: TextButton.styleFrom(
                           backgroundColor:
                               MyApp.themeNotifier.value == ThemeMode.light
                                   ? Colors.black.withOpacity(0.1)
-                                  : Colors.white.withOpacity(
-                                      0.2), // Change the background color here
+                                  : Colors.white.withOpacity(0.2),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16.0),
                           ),
@@ -574,11 +551,9 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                           squeeze: 1.2,
                           useMagnifier: true,
                           itemExtent: _kItemExtent,
-                          // This sets the initial item.
                           scrollController: FixedExtentScrollController(
                             initialItem: currentAbvIndex,
                           ),
-                          // This is called when selected item is changed.
                           onSelectedItemChanged: (int selectedItemIndex) {
                             currentAbvIndex = selectedItemIndex;
 
@@ -623,21 +598,20 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
               ),
             ],
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: 4),
           Row(
             children: [
               Align(
                 alignment: Alignment.centerLeft,
                 child: SizedBox(
-                  width: (width - 32) / 2 - 3, // width - body column padding
+                  width: (width - 32) / 2 - 3,
                   height: height * 0.06,
                   child: TextButton(
                     style: TextButton.styleFrom(
                       backgroundColor:
                           MyApp.themeNotifier.value == ThemeMode.light
                               ? Colors.black.withOpacity(0.2)
-                              : Colors.white.withOpacity(
-                                  0.1), // Change the background color here
+                              : Colors.white.withOpacity(0.1),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0),
                       ),
@@ -665,7 +639,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   ),
                 ),
               ),
-              const SizedBox(width: 6),
+              const SizedBox(width: 4),
               Align(
                 alignment: Alignment.centerRight,
                 child: SizedBox(
@@ -710,6 +684,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
         ],
       );
 
+  //Widget for BAC display at top of screen
   Widget _bacButton(double bac, double width, double height) => SizedBox(
         height: height * 0.05,
         width: width / 2.5,
@@ -717,8 +692,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           style: TextButton.styleFrom(
             backgroundColor: MyApp.themeNotifier.value == ThemeMode.light
                 ? Colors.black.withOpacity(0.1)
-                : Colors.white
-                    .withOpacity(0.2), // Change the background color here
+                : Colors.white.withOpacity(0.2),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0)),
           ),
@@ -733,6 +707,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
         ),
       );
 
+  //Info warning if user info is not entered
   void _infoWarning(BuildContext context) {
     showDialog(
       context: context,
@@ -748,8 +723,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           actions: [
             TextButton(
               onPressed: () {
-                // Add code here to handle the action when the user taps on the button
-                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pop();
               },
               child: const Text('OK',
                   style: TextStyle(
@@ -783,7 +757,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
     int unit = ref.watch(unitController);
     Color color = ref.watch(colorController);
     double genderVal = ref.watch(genderController);
-    //List<Drink> drinks = ref.watch(drinkController);
 
     return Scaffold(
       appBar: AppBar(
@@ -806,10 +779,9 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                 context: context,
                 timeTillDrive: convertToHoursMinutes(
                     (ref.watch(bacController) - legalLimit) / 0.015),
-                backgroundColor: ref
-                    .watch(colorController), // Customize the background color
+                backgroundColor: ref.watch(colorController),
                 duration: const Duration(seconds: 5),
-                bac: ref.watch(bacController), // Customize the duration
+                bac: ref.watch(bacController),
               );
 
               ScaffoldMessenger.of(context).showSnackBar(driveAlert);
@@ -821,7 +793,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             ),
             iconSize: 25,
             onPressed: () {
-              // Navigating to the MyProfilePage when the settings icon is tapped
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -847,19 +818,19 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                SizedBox(height: height * 0.1),
+                Expanded(child: SizedBox(height: height * 0.1)),
                 _countDisplay(
                     count,
                     color,
                     findRatio(recLevel, bac, legalLimit, tolerance),
                     width,
                     height),
-                Expanded(child: SizedBox(height: height * 0.1)),
+                SizedBox(height: height * 0.1),
                 _drinkSelector(height),
-                const SizedBox(height: 6),
+                const SizedBox(height: 4),
                 _inputPanel(width, height, weight, abv, oz, bac, recLevel,
                     legalLimit, tolerance, count, genderVal, unit),
-                const SizedBox(height: 6),
+                const SizedBox(height: 4),
               ],
             ),
           ),

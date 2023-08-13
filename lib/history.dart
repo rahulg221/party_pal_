@@ -18,12 +18,14 @@ class MyFriendsPage extends ConsumerStatefulWidget {
 class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
   final ScrollController _scrollController = ScrollController();
 
+  //Changes to other theme option
   void toggleTheme() {
     MyApp.themeNotifier.value = MyApp.themeNotifier.value == ThemeMode.light
         ? ThemeMode.dark
         : ThemeMode.light;
   }
 
+  //Converts hours to Hours:Minutes format
   String convertToHoursMinutes(double timeInHours) {
     int hours = timeInHours.toInt();
     int minutes = ((timeInHours - hours) * 60).round();
@@ -33,15 +35,13 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
       minutes = 0;
     }
 
-    // Pad hours with leading zero if needed
     String paddedHours = hours.toString().padLeft(2, '0');
-
-    // Pad minutes with leading zero if needed
     String paddedMinutes = minutes.toString().padLeft(2, '0');
 
     return '$paddedHours:$paddedMinutes';
   }
 
+  //Formats the time each drink was consumed at as Hours:Minutes:AM/PM
   String formatTimestamp(DateTime timestamp) {
     final hour = timestamp.hour > 12 ? timestamp.hour - 12 : timestamp.hour;
     final minute = timestamp.minute.toString().padLeft(2, '0');
@@ -50,6 +50,7 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
     return '$hour:$minute $period';
   }
 
+  //Widget for listing drinks of the night
   Widget _drinkList(double width, double height, List<Drink> drinks) =>
       Material(
         elevation: 6,
@@ -141,14 +142,14 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
         ),
       );
 
+  //Widget to display number of standard drinks
   Widget _drinkDisplay(double count, double width, double height) => Material(
         elevation: 6,
         color: MyApp.themeNotifier.value == ThemeMode.light
             ? Colors.white
             : Colors.black,
         shape: RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.circular(20), // Adjust the radius as needed
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Container(
           width: width - 32,
@@ -231,10 +232,9 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
                 context: context,
                 timeTillDrive: convertToHoursMinutes(
                     (ref.watch(bacController) - legalLimit) / 0.015),
-                backgroundColor: ref
-                    .watch(colorController), // Customize the background color
+                backgroundColor: ref.watch(colorController),
                 duration: const Duration(seconds: 5),
-                bac: ref.watch(bacController), // Customize the duration
+                bac: ref.watch(bacController),
               );
 
               ScaffoldMessenger.of(context).showSnackBar(driveAlert);
@@ -246,7 +246,6 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
             ),
             iconSize: 25,
             onPressed: () {
-              // Navigating to the MyProfilePage when the settings icon is tapped
               Navigator.push(
                 context,
                 MaterialPageRoute(

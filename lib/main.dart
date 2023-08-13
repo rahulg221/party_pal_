@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lift_links/bac_info.dart';
 import 'package:lift_links/history.dart';
@@ -8,14 +9,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
 
+Timer? timer;
+
 class LifeCycle extends ConsumerStatefulWidget {
   final Widget child;
   const LifeCycle({Key? key, required this.child}) : super(key: key);
 
   @override
-  _LifeCycleState createState() => _LifeCycleState();
+  //_LifeCycleState
+  ConsumerState<LifeCycle> createState() => _LifeCycleState();
 }
 
+//Updates BAC for the time elapsed from when the app is hidden and reopened
 class _LifeCycleState extends ConsumerState<LifeCycle>
     with WidgetsBindingObserver {
   DateTime timePaused = DateTime.now();
@@ -33,15 +38,42 @@ class _LifeCycleState extends ConsumerState<LifeCycle>
     super.dispose();
   }
 
+  void startTimer() {
+    print('timer started');
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (ref.watch(bacController) <= 0) {
+        stopTimer();
+      } else {
+        ref.read(bacController.notifier).timeDecrement();
+      }
+    });
+  }
+
+  //Stops timer
+  void stopTimer() {
+    print('timer stopped');
+    if (timer != null && timer!.isActive) {
+      timer!.cancel();
+      timer = null;
+    }
+  }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
       timePaused = DateTime.now();
-      print('Time paused: $timePaused');
+      print('paused');
+      stopTimer();
     } else if (state == AppLifecycleState.resumed) {
       timeResumed = DateTime.now();
-      print('Time resumed: $timeResumed');
       ref.read(bacController.notifier).appResume(timePaused);
+      ref.read(colorController.notifier).changeColor(
+          ref.watch(bacController),
+          ref.watch(recController),
+          ref.watch(limitController),
+          ref.watch(tolController));
+      print('resumed');
+      startTimer();
     }
   }
 
@@ -52,14 +84,12 @@ class _LifeCycleState extends ConsumerState<LifeCycle>
 }
 
 void main() {
-  // wrap the entire app with a ProviderScope so that widgets
-  // will be able to read providers
-// add these lines
-
+  //Sets app to always being in Portrait mode
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
+  //Wrapped in ProviderScope
   runApp(const ProviderScope(
     child: MyApp(),
   ));
@@ -71,26 +101,27 @@ class MyApp extends ConsumerWidget {
 
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ValueListenableBuilder<ThemeMode>(
         valueListenable: themeNotifier,
         builder: (_, ThemeMode currentMode, __) {
           return MaterialApp(
-            // Remove the debug banner
             debugShowCheckedModeBanner: false,
+            //Passes width, height, and current color to theme settings
             theme: createLightTheme(
               ref.watch(colorController),
               MediaQuery.of(context).size.width,
               MediaQuery.of(context).size.height,
             ),
+            //Passes width, height, and current color to theme settings
             darkTheme: createDarkTheme(
               ref.watch(colorController),
               MediaQuery.of(context).size.width,
               MediaQuery.of(context).size.height,
             ),
             themeMode: currentMode,
+            //Wrapped in LifeCycle
             home: const LifeCycle(
               child: MainPage(
                 title: 'Party Pal App',
@@ -111,7 +142,7 @@ class MainPage extends ConsumerStatefulWidget {
 }
 
 class _MainPageState extends ConsumerState<MainPage> {
-  int? themeFlag = -1; // initializers to hold loaded in data from shared pref
+  int? themeFlag = -1;
   double weight = 0.0;
   double genderVal = 0.0;
   double age = 0.0;
@@ -129,10 +160,10 @@ class _MainPageState extends ConsumerState<MainPage> {
     const MyHomePage(title: ''),
     const MyFriendsPage(title: 'Drink History'),
     const MyInfoPage(title: 'BAC Information'),
-    //const MyTipsPage(title: 'Tips and Tricks'),
   ];
 
   _loadApp() async {
+    //Loads in values from shared preferences into variables
     SharedPreferences prefs = await SharedPreferences.getInstance();
     themeFlag = prefs.getInt('theme');
     genderVal = prefs.getDouble('gender') ?? 0.0;
@@ -143,10 +174,11 @@ class _MainPageState extends ConsumerState<MainPage> {
     tolerance = prefs.getDouble('tolerance') ?? 1.0;
     unit = prefs.getInt('unit') ?? 0;
 
+    //Sets values to providers
     ref.read(genderController.notifier).setGender(genderVal);
-    ref.read(weightController.notifier).setWeight(weight, unit);
+    ref.read(weightController.notifier).setWeight(weight);
     ref.read(ageController.notifier).setAge(age);
-    ref.read(weightController.notifier).setWeight(weight, unit);
+    ref.read(weightController.notifier).setWeight(weight);
     ref.read(limitController.notifier).setLimit(legalLimit);
     ref.read(recController.notifier).setRec(recLevel);
     ref.read(tolController.notifier).setTol(tolerance);
@@ -167,9 +199,7 @@ class _MainPageState extends ConsumerState<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    Color color = ref.watch(colorController);
     final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       bottomNavigationBar: Padding(
@@ -182,21 +212,17 @@ class _MainPageState extends ConsumerState<MainPage> {
           onTap: (newIndex) => pageController.jumpToPage(newIndex),
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.local_bar, size: height * 0.01 * 3),
+              icon: Icon(Icons.local_bar, size: height * 0.03),
               label: 'Add Drinks',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.access_time_outlined, size: height * 0.01 * 3),
+              icon: Icon(Icons.access_time_outlined, size: height * 0.03),
               label: 'Drink History',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.info, size: height * 0.01 * 3),
+              icon: Icon(Icons.info, size: height * 0.03),
               label: 'BAC Info',
             ),
-            /*BottomNavigationBarItem(
-              icon: Icon(Icons.lightbulb),
-              label: 'Tips',
-            ),*/
           ],
         ),
       ),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+//Reusable snack bar for displaying sober countdown, used on every page by clicking Car icon in AppBar
 class ReusableSnackBar extends SnackBar {
-  ReusableSnackBar({super.key, 
+  ReusableSnackBar({
+    super.key,
     required BuildContext context,
     required String timeTillDrive,
     required double bac,
@@ -15,53 +17,45 @@ class ReusableSnackBar extends SnackBar {
                 child: IconButton(
                   icon: const Icon(Icons.close),
                   onPressed: () {
-                    // Close the SnackBar when the close button is pressed
                     ScaffoldMessenger.of(context).hideCurrentSnackBar();
                   },
                   color: Colors.black,
                 ),
               ),
-              /*
-              Icon(
-                bac >= 0.08
-                    ? Icons.sentiment_very_dissatisfied
-                    : Icons.sentiment_very_satisfied,
-                size: 60,
-                color: Colors.black,
-              ),*/
               Text(
-                'BAC will reach the legal driving limit in:\n',
+                'BAC will reach legal limit in:',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: MediaQuery.of(context).size.height * 0.01 * 2,
+                  fontSize: MediaQuery.of(context).size.height * 0.025,
                   fontWeight: FontWeight.bold,
                   height: 1,
                 ),
               ),
+              const SizedBox(height: 4),
               Text(
                 timeTillDrive,
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: MediaQuery.of(context).size.height * 0.01 * 10,
+                  fontSize: MediaQuery.of(context).size.height * 0.1,
                   fontWeight: FontWeight.bold,
                   height: 1,
                 ),
               ),
               Text(
-                'hrs               mins\n',
+                'Hrs               Mins\n',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: MediaQuery.of(context).size.height * 0.01 * 2,
+                  fontSize: MediaQuery.of(context).size.height * 0.02,
                   fontWeight: FontWeight.bold,
                   height: 1,
                 ),
               ),
               Text(
                 bac >= 0.08
-                    ? 'Call a friend or a ride share service to take you home.'
+                    ? 'It is currently illegal to drive at the moment.'
                     : 'Your estimated BAC is below the indicated legal limit.',
                 style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.height * 0.01 * 2.5,
+                  fontSize: MediaQuery.of(context).size.height * 0.025,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                   height: 1,
@@ -69,9 +63,11 @@ class ReusableSnackBar extends SnackBar {
               ),
               const SizedBox(height: 10),
               Text(
-                'This is just an estimate, make sure to use your own judgment to determine if you should drive',
+                bac >= 0.08
+                    ? 'Call a friend or a ride share service to take you home.'
+                    : 'This is just an estimate, make sure to use your own judgment to determine if you should drive.',
                 style: TextStyle(
-                  fontSize: MediaQuery.of(context).size.height * 0.01 * 2.5,
+                  fontSize: MediaQuery.of(context).size.height * 0.025,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                   height: 1,
