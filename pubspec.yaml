@@ -47,6 +47,7 @@ dependencies:
   flutter_riverpod: ^2.3.6
   animated_splash_screen: ^1.3.0
   auto_size_text: ^3.0.0
+  sqflite: ^2.3.0
  
 
 dev_dependencies:
