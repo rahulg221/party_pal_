@@ -76,7 +76,7 @@ class _MyHistoryPageState extends ConsumerState<MyHistoryPage> {
                         ? Colors.black.withOpacity(0.9)
                         : ref.watch(colorController),
                     fontFamily: fontStyle,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 subtitle: Text(
@@ -87,7 +87,7 @@ class _MyHistoryPageState extends ConsumerState<MyHistoryPage> {
                         ? Colors.black.withOpacity(0.9)
                         : ref.watch(colorController),
                     fontFamily: fontStyle,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
                 trailing: Column(
@@ -101,7 +101,7 @@ class _MyHistoryPageState extends ConsumerState<MyHistoryPage> {
                             ? Colors.black.withOpacity(0.9)
                             : ref.watch(colorController),
                         fontFamily: fontStyle,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     Text(
@@ -112,7 +112,7 @@ class _MyHistoryPageState extends ConsumerState<MyHistoryPage> {
                             ? Colors.black.withOpacity(0.9)
                             : ref.watch(colorController),
                         fontFamily: fontStyle,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
