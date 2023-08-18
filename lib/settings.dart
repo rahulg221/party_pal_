@@ -460,6 +460,16 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
             ),
             content: Column(
               children: [
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                ),
                 Align(
                   alignment: Alignment.topRight,
                   child: IconButton(
@@ -543,6 +553,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
           ),
           iconSize: 20,
           onPressed: () {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
             Navigator.pop(context);
           },
         ),

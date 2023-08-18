@@ -91,43 +91,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
         : ThemeMode.light;
   }
 
-  //Converts hours to Hours:Minutes format
-  String convertToHoursMinutes(double timeInHours) {
-    int hours = timeInHours.toInt();
-    int minutes = ((timeInHours - hours) * 60).round();
-
-    if (hours <= 0 && minutes <= 0) {
-      hours = 0;
-      minutes = 0;
-    }
-
-    String paddedHours = hours.toString().padLeft(2, '0');
-    String paddedMinutes = minutes.toString().padLeft(2, '0');
-
-    return '$paddedHours:$paddedMinutes';
-  }
-
-  //Starts timer to decrement BAC every second the app is active
-  void startTimer() {
-    print('timer started');
-    timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      if (ref.watch(bacController) <= 0) {
-        stopTimer();
-      } else {
-        ref.read(bacController.notifier).timeDecrement();
-      }
-    });
-  }
-
-  //Stops timer
-  void stopTimer() {
-    print('timer stopped');
-    if (timer != null && timer!.isActive) {
-      timer!.cancel();
-      timer = null;
-    }
-  }
-
   //Calculates ratio of current BAC / max BAC limit to determine Ring percentage
   double findRatio(
       int recLevel, double bac, double legalLimit, double tolerance) {
@@ -144,7 +107,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
 
   @override
   void dispose() {
-    timer?.cancel();
     super.dispose();
   }
 
@@ -379,7 +341,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       colors: [
                         MyApp.themeNotifier.value == ThemeMode.light
                             ? Colors.transparent
-                            : Colors.grey.shade900,
+                            : Colors.grey.shade900.withOpacity(0.5),
                         MyApp.themeNotifier.value == ThemeMode.light
                             ? Colors.black.withOpacity(0.1)
                             : Colors.transparent,
@@ -430,7 +392,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   ),
                   onPressed: () {
                     if (ref.watch(countController) == 0) {
-                      startTimer();
+                      ref.read(bacController.notifier).startTimer();
                     }
 
                     if (weight != 0.0 &&
@@ -666,7 +628,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                           .read(colorController.notifier)
                           .changeColor(0, recLevel, legalLimit, tolerance);
 
-                      stopTimer();
+                      ref.read(bacController.notifier).stopTimer();
                       //dispose();
                     },
                     child: Icon(
@@ -777,7 +739,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
             onPressed: () {
               final driveAlert = ReusableSnackBar(
                 context: context,
-                timeTillDrive: convertToHoursMinutes(
+                timeTillDrive: ref.read(formatController.notifier).getHrsMins(
                     (ref.watch(bacController) - legalLimit) / 0.015),
                 backgroundColor: ref.watch(colorController),
                 duration: const Duration(seconds: 5),

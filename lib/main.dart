@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lift_links/bac_info.dart';
 import 'package:lift_links/history.dart';
@@ -8,8 +7,6 @@ import 'package:lift_links/theme_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
-
-Timer? timer;
 
 class LifeCycle extends ConsumerStatefulWidget {
   final Widget child;
@@ -38,32 +35,12 @@ class _LifeCycleState extends ConsumerState<LifeCycle>
     super.dispose();
   }
 
-  void startTimer() {
-    print('timer started');
-    timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      if (ref.watch(bacController) <= 0) {
-        stopTimer();
-      } else {
-        ref.read(bacController.notifier).timeDecrement();
-      }
-    });
-  }
-
-  //Stops timer
-  void stopTimer() {
-    print('timer stopped');
-    if (timer != null && timer!.isActive) {
-      timer!.cancel();
-      timer = null;
-    }
-  }
-
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
       timePaused = DateTime.now();
       print('paused');
-      stopTimer();
+      ref.read(bacController.notifier).stopTimer();
     } else if (state == AppLifecycleState.resumed) {
       timeResumed = DateTime.now();
       ref.read(bacController.notifier).appResume(timePaused);
@@ -73,7 +50,7 @@ class _LifeCycleState extends ConsumerState<LifeCycle>
           ref.watch(limitController),
           ref.watch(tolController));
       print('resumed');
-      startTimer();
+      ref.read(bacController.notifier).startTimer();
     }
   }
 
@@ -158,7 +135,7 @@ class _MainPageState extends ConsumerState<MainPage> {
 
   final screensList = [
     const MyHomePage(title: ''),
-    const MyFriendsPage(title: 'Drink History'),
+    const MyHistoryPage(title: 'Drink History'),
     const MyInfoPage(title: 'BAC Information'),
   ];
 
@@ -191,6 +168,14 @@ class _MainPageState extends ConsumerState<MainPage> {
     }
   }
 
+  void navigateToPage(int index) {
+    // Hide the current snackbar before changing the page
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+    // Change the page index
+    pageController.jumpToPage(index);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -209,7 +194,7 @@ class _MainPageState extends ConsumerState<MainPage> {
           showUnselectedLabels: false,
           iconSize: 27,
           currentIndex: currentIndex,
-          onTap: (newIndex) => pageController.jumpToPage(newIndex),
+          onTap: (newIndex) => navigateToPage(newIndex),
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.local_bar, size: height * 0.03),

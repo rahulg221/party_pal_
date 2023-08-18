@@ -52,6 +52,7 @@ ThemeData createLightTheme(Color textColor, double width, double height) {
         fontSize: textScale * 2.5,
         color: Colors.black,
         fontFamily: fontStyle,
+        fontWeight: FontWeight.w600,
       ),
       bodySmall: TextStyle(
         fontSize: textScale * 2,
@@ -176,6 +177,7 @@ ThemeData createDarkTheme(Color textColor, double width, double height) {
         fontSize: textScale * 2.5,
         color: textColor,
         fontFamily: fontStyle,
+        fontWeight: FontWeight.w600,
       ),
       bodySmall: TextStyle(
         fontSize: textScale * 2,

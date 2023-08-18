@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -44,6 +46,31 @@ class CountNotifier extends StateNotifier<double> {
 
 class BacNotifier extends StateNotifier<double> {
   BacNotifier() : super(0);
+  Timer? _timer;
+
+  @override
+  void dispose() {
+    _timer?.cancel(); // Cancel the timer when the notifier is disposed
+    super.dispose();
+  }
+
+  //Starts timer and decrements bac
+  void startTimer() {
+    if (_timer == null || !_timer!.isActive) {
+      _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+        if (state > 0) {
+          state -= 0.015 * (1 / 3600);
+        } else {
+          stopTimer();
+        }
+      });
+    }
+  }
+
+  //Stops timer
+  void stopTimer() {
+    _timer?.cancel();
+  }
 
   //Updates bac based on new drinks added
   void updateBac(double weight, double genderVal, double count, int unit) {
@@ -64,20 +91,6 @@ class BacNotifier extends StateNotifier<double> {
       } else {
         state = 0;
       }
-    }
-  }
-
-  //Decrements bac every second the app is open
-  void timeDecrement() {
-    double newBac = 0.0;
-
-    newBac = state - (0.015 * (1 / 3600));
-    //print('dec');
-
-    if (newBac >= 0) {
-      state = newBac;
-    } else {
-      state = 0;
     }
   }
 
@@ -297,6 +310,35 @@ class DrinkNotifier extends StateNotifier<List<Drink>> {
   }
 }
 
+class FormatNotifier extends StateNotifier<String> {
+  FormatNotifier() : super('');
+
+  //Converts hours to Hours:Minutes format
+  String getHrsMins(double timeInHours) {
+    int hours = timeInHours.toInt();
+    int minutes = ((timeInHours - hours) * 60).round();
+
+    if (hours <= 0 && minutes <= 0) {
+      hours = 0;
+      minutes = 0;
+    }
+
+    String paddedHours = hours.toString().padLeft(2, '0');
+    String paddedMinutes = minutes.toString().padLeft(2, '0');
+
+    return '$paddedHours:$paddedMinutes';
+  }
+
+  //Formats the time each drink was consumed at as Hours:Minutes:AM/PM
+  String getTimestamp(DateTime timestamp) {
+    final hour = timestamp.hour > 12 ? timestamp.hour - 12 : timestamp.hour;
+    final minute = timestamp.minute.toString().padLeft(2, '0');
+    final period = timestamp.hour >= 12 ? 'PM' : 'AM';
+
+    return '$hour:$minute $period';
+  }
+}
+
 final countController =
     StateNotifierProvider<CountNotifier, double>((ref) => CountNotifier());
 
@@ -335,3 +377,6 @@ final colorController =
 
 final drinkController =
     StateNotifierProvider<DrinkNotifier, List<Drink>>((ref) => DrinkNotifier());
+
+final formatController =
+    StateNotifierProvider<FormatNotifier, String>((ref) => FormatNotifier());

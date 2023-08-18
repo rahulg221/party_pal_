@@ -6,16 +6,16 @@ import 'package:lift_links/theme_config.dart';
 import 'main.dart';
 import 'package:lift_links/providers.dart';
 
-class MyFriendsPage extends ConsumerStatefulWidget {
-  const MyFriendsPage({super.key, required this.title});
+class MyHistoryPage extends ConsumerStatefulWidget {
+  const MyHistoryPage({super.key, required this.title});
 
   final String title;
 
   @override
-  ConsumerState<MyFriendsPage> createState() => _MyFriendsPageState();
+  ConsumerState<MyHistoryPage> createState() => _MyHistoryPageState();
 }
 
-class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
+class _MyHistoryPageState extends ConsumerState<MyHistoryPage> {
   final ScrollController _scrollController = ScrollController();
 
   //Changes to other theme option
@@ -23,31 +23,6 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
     MyApp.themeNotifier.value = MyApp.themeNotifier.value == ThemeMode.light
         ? ThemeMode.dark
         : ThemeMode.light;
-  }
-
-  //Converts hours to Hours:Minutes format
-  String convertToHoursMinutes(double timeInHours) {
-    int hours = timeInHours.toInt();
-    int minutes = ((timeInHours - hours) * 60).round();
-
-    if (hours <= 0 && minutes <= 0) {
-      hours = 0;
-      minutes = 0;
-    }
-
-    String paddedHours = hours.toString().padLeft(2, '0');
-    String paddedMinutes = minutes.toString().padLeft(2, '0');
-
-    return '$paddedHours:$paddedMinutes';
-  }
-
-  //Formats the time each drink was consumed at as Hours:Minutes:AM/PM
-  String formatTimestamp(DateTime timestamp) {
-    final hour = timestamp.hour > 12 ? timestamp.hour - 12 : timestamp.hour;
-    final minute = timestamp.minute.toString().padLeft(2, '0');
-    final period = timestamp.hour >= 12 ? 'PM' : 'AM';
-
-    return '$hour:$minute $period';
   }
 
   //Widget for listing drinks of the night
@@ -72,10 +47,10 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
               end: Alignment.bottomRight,
               colors: [
                 MyApp.themeNotifier.value == ThemeMode.light
-                    ? ref.watch(colorController).withOpacity(0.7)
-                    : Colors.grey.shade900,
+                    ? ref.watch(colorController)
+                    : Colors.grey.shade900.withOpacity(0.5),
                 MyApp.themeNotifier.value == ThemeMode.light
-                    ? ref.watch(colorController).withOpacity(0.8)
+                    ? ref.watch(colorController).withOpacity(0.9)
                     : Colors.black,
               ],
             ),
@@ -89,7 +64,9 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
             itemCount: drinks.length,
             itemBuilder: (context, index) {
               Drink drink = drinks[index];
-              String time = formatTimestamp(drink.timestamps);
+              String time = ref
+                  .read(formatController.notifier)
+                  .getTimestamp(drink.timestamps);
               return ListTile(
                 title: Text(
                   drink.type,
@@ -99,16 +76,18 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
                         ? Colors.black.withOpacity(0.9)
                         : ref.watch(colorController),
                     fontFamily: fontStyle,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 subtitle: Text(
                   time,
                   style: TextStyle(
-                    fontSize: height * 0.01 * 2,
+                    fontSize: height * 0.01 * 2.5,
                     color: MyApp.themeNotifier.value == ThemeMode.light
                         ? Colors.black.withOpacity(0.9)
                         : ref.watch(colorController),
                     fontFamily: fontStyle,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 trailing: Column(
@@ -117,21 +96,23 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
                     Text(
                       '${drink.percentage}%',
                       style: TextStyle(
-                        fontSize: height * 0.01 * 2,
+                        fontSize: height * 0.01 * 2.5,
                         color: MyApp.themeNotifier.value == ThemeMode.light
                             ? Colors.black.withOpacity(0.9)
                             : ref.watch(colorController),
                         fontFamily: fontStyle,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                     Text(
                       '${drink.size} oz',
                       style: TextStyle(
-                        fontSize: height * 0.01 * 2,
+                        fontSize: height * 0.01 * 2.5,
                         color: MyApp.themeNotifier.value == ThemeMode.light
                             ? Colors.black.withOpacity(0.9)
                             : ref.watch(colorController),
                         fontFamily: fontStyle,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ],
@@ -160,10 +141,10 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
                 end: Alignment.bottomRight,
                 colors: [
                   MyApp.themeNotifier.value == ThemeMode.light
-                      ? ref.watch(colorController).withOpacity(0.7)
-                      : Colors.grey.shade900,
+                      ? ref.watch(colorController)
+                      : Colors.grey.shade900.withOpacity(0.5),
                   MyApp.themeNotifier.value == ThemeMode.light
-                      ? ref.watch(colorController).withOpacity(0.8)
+                      ? ref.watch(colorController).withOpacity(0.9)
                       : Colors.black,
                 ],
               ),
@@ -230,7 +211,7 @@ class _MyFriendsPageState extends ConsumerState<MyFriendsPage> {
             onPressed: () {
               final driveAlert = ReusableSnackBar(
                 context: context,
-                timeTillDrive: convertToHoursMinutes(
+                timeTillDrive: ref.read(formatController.notifier).getHrsMins(
                     (ref.watch(bacController) - legalLimit) / 0.015),
                 backgroundColor: ref.watch(colorController),
                 duration: const Duration(seconds: 5),

@@ -24,22 +24,6 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
         : ThemeMode.light;
   }
 
-  //Converts hours to Hours:Minutes format
-  String convertToHoursMinutes(double timeInHours) {
-    int hours = timeInHours.toInt();
-    int minutes = ((timeInHours - hours) * 60).round();
-
-    if (hours <= 0 && minutes <= 0) {
-      hours = 0;
-      minutes = 0;
-    }
-
-    String paddedHours = hours.toString().padLeft(2, '0');
-    String paddedMinutes = minutes.toString().padLeft(2, '0');
-
-    return '$paddedHours:$paddedMinutes';
-  }
-
   //Returns different common effects when BAC reaches different levels
   String commonEffects(double bac) {
     if (bac < 0.02) {
@@ -77,10 +61,10 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
                 end: Alignment.bottomRight,
                 colors: [
                   MyApp.themeNotifier.value == ThemeMode.light
-                      ? ref.watch(colorController).withOpacity(0.7)
-                      : Colors.grey.shade900,
+                      ? ref.watch(colorController)
+                      : Colors.grey.shade900.withOpacity(0.5),
                   MyApp.themeNotifier.value == ThemeMode.light
-                      ? ref.watch(colorController).withOpacity(0.8)
+                      ? ref.watch(colorController).withOpacity(0.9)
                       : Colors.black,
                 ],
               ),
@@ -131,10 +115,10 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
                 end: Alignment.bottomRight,
                 colors: [
                   MyApp.themeNotifier.value == ThemeMode.light
-                      ? ref.watch(colorController).withOpacity(0.7)
-                      : Colors.grey.shade900,
+                      ? ref.watch(colorController)
+                      : Colors.grey.shade900.withOpacity(0.5),
                   MyApp.themeNotifier.value == ThemeMode.light
-                      ? ref.watch(colorController).withOpacity(0.8)
+                      ? ref.watch(colorController).withOpacity(0.9)
                       : Colors.black,
                 ],
               ),
@@ -177,7 +161,7 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
             onPressed: () {
               final driveAlert = ReusableSnackBar(
                 context: context,
-                timeTillDrive: convertToHoursMinutes(
+                timeTillDrive: ref.read(formatController.notifier).getHrsMins(
                     (ref.watch(bacController) - legalLimit) / 0.015),
                 backgroundColor: ref.watch(colorController),
                 duration: const Duration(seconds: 5),
