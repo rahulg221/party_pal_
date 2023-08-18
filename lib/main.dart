@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:lift_links/bac_info.dart';
-import 'package:lift_links/history.dart';
-import 'package:lift_links/homepage.dart';
-import 'package:lift_links/providers.dart';
-import 'package:lift_links/theme_config.dart';
+import 'package:lift_links/screens/bac_info.dart';
+import 'package:lift_links/screens/history.dart';
+import 'package:lift_links/screens/homepage.dart';
+import 'package:lift_links/helpers/providers.dart';
+import 'package:lift_links/helpers/theme_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
