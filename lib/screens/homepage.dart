@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lift_links/helpers/sql_helper.dart';
 import 'package:lift_links/widgets/drive_alert.dart';
@@ -8,6 +9,7 @@ import 'package:lift_links/screens/settings.dart';
 import 'package:activity_ring/activity_ring.dart';
 import 'package:lift_links/helpers/theme_config.dart';
 import 'package:lift_links/helpers/providers.dart';
+import 'package:flutter_sms/flutter_sms.dart';
 
 class MyHomePage extends ConsumerStatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -23,6 +25,11 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   int ozLength = 3;
   int abvLength = 6;
   String listName = '';
+
+  //Flags if sms for legal limit has been sent already
+  int smsFlag1 = 0;
+  //Flags if sms for overall limit has been sent already
+  int smsFlag2 = 0;
 
   int currentIndex = 1;
   int currentAbvIndex = 1;
@@ -90,7 +97,37 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
         : ThemeMode.light;
   }
 
-  //Saves count/bac in database
+  //Sends text message to specified recipients
+  //Note: need to download from flutter sms repo and manually set path in pubspec.yaml
+  void _sendSMS(String message, List<String> recipents) async {
+    String result = await sendSMS(message: message, recipients: recipents)
+        .catchError((onError) {
+      print(onError);
+    });
+    print(result);
+  }
+
+  void _friendMessage() {
+    if (ref.watch(recipientController)[0] != '') {
+      if (ref.watch(colorController) == Colors.red.shade600) {
+        if (smsFlag2 == 0) {
+          _sendSMS('[PartyPal] Cut me off! I have surpassed my limit.',
+              ref.watch(recipientController));
+
+          smsFlag2 = 1;
+        }
+      } else if (ref.watch(bacController) >= ref.watch(limitController)) {
+        if (smsFlag1 == 0) {
+          _sendSMS('[PartyPal] Take away my keys! I am past the legal limit.',
+              ref.watch(recipientController));
+
+          smsFlag1 = 1;
+        }
+      }
+    }
+  }
+
+  //Saves count/bac in database without accounting for time
   void _saveInfo(double count, double bac) async {
     try {
       await SQLHelper.saveInfo(count, bac);
@@ -144,7 +181,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   @override
   void initState() {
     //Loads in count/bac and changes color
-    _loadInfo();
+    //_loadInfo();
 
     super.initState();
   }
@@ -460,8 +497,10 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                           .read(drinkController.notifier)
                           .logDrink(drinkType, abv, oz, DateTime.now());
 
-                      _saveInfo(
-                          ref.watch(countController), ref.watch(bacController));
+                      /* _saveInfo(
+                          ref.watch(countController), ref.watch(bacController));*/
+
+                      _friendMessage();
                     } else {
                       _infoWarning(context);
                     }
@@ -638,8 +677,8 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
 
                       ref.read(drinkController.notifier).undoRecent();
 
-                      _saveInfo(
-                          ref.watch(countController), ref.watch(bacController));
+                      /* _saveInfo(
+                          ref.watch(countController), ref.watch(bacController));*/
                     },
                     child: Icon(
                       Icons.undo,

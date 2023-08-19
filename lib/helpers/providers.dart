@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -274,7 +273,7 @@ class ColorNotifier extends StateNotifier<Color> {
       } else if ((bac / (legalLimit - 0.02)) * 100 < 100) {
         state = Colors.yellowAccent.shade400;
       } else {
-        state = Colors.red.shade900;
+        state = Colors.red.shade600;
       }
     } else if (recLevel == 2) {
       if ((bac / (0.11 * tolerance)) * 100 < 66) {
@@ -355,6 +354,18 @@ class FormatNotifier extends StateNotifier<String> {
   }
 }
 
+class RecipientNotifier extends StateNotifier<List<String>> {
+  RecipientNotifier() : super([]);
+
+  void setRecipient(List<String> number) {
+    state = number;
+  }
+
+  void reset() {
+    state = [''];
+  }
+}
+
 final countController =
     StateNotifierProvider<CountNotifier, double>((ref) => CountNotifier());
 
@@ -396,3 +407,7 @@ final drinkController =
 
 final formatController =
     StateNotifierProvider<FormatNotifier, String>((ref) => FormatNotifier());
+
+final recipientController =
+    StateNotifierProvider<RecipientNotifier, List<String>>(
+        (ref) => RecipientNotifier());

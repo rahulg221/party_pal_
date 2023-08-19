@@ -51,6 +51,8 @@ class _LifeCycleState extends ConsumerState<LifeCycle>
           ref.watch(tolController));
       print('resumed');
       ref.read(bacController.notifier).startTimer();
+    } else if (state == AppLifecycleState.detached) {
+      print('closed');
     }
   }
 
@@ -160,6 +162,7 @@ class _MainPageState extends ConsumerState<MainPage> {
     ref.read(recController.notifier).setRec(recLevel);
     ref.read(tolController.notifier).setTol(tolerance);
     ref.read(unitController.notifier).setUnit(unit);
+    ref.read(recipientController.notifier).setRecipient(['']);
 
     if (themeFlag == 1) {
       MyApp.themeNotifier.value = ThemeMode.light;

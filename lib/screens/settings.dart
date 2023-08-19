@@ -58,6 +58,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
     ref.read(recController.notifier).reset();
     ref.read(tolController.notifier).reset();
     ref.read(unitController.notifier).reset();
+    ref.read(recipientController.notifier).reset();
 
     prefs.setDouble('gender', 0);
     prefs.setDouble('weight', 0);
@@ -363,8 +364,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
       );
 
   //Widget for reusable text fields for Age, Weight, Legal Limit
-  Widget _textField(
-          String hintText, String labelText, double value, int unit) =>
+  Widget _textField(String hintText, String labelText, double value) =>
       TextField(
         style: TextStyle(
           color: MyApp.themeNotifier.value == ThemeMode.dark
@@ -388,11 +388,24 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                 double newLimit = double.parse(newValue);
                 ref.read(limitController.notifier).setLimit(newLimit);
                 break;
+
+              case 'PhoneNum':
+                List<String> newRecipient = [];
+                newRecipient.add(newValue);
+                ref
+                    .read(recipientController.notifier)
+                    .setRecipient(newRecipient);
             }
           });
         },
         decoration: InputDecoration(
-          hintText: value == 0 ? hintText : '$value',
+          hintText: labelText == 'PhoneNum'
+              ? ref.watch(recipientController)[0] == ''
+                  ? hintText
+                  : ref.watch(recipientController)[0]
+              : value == 0
+                  ? hintText
+                  : '$value',
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: ref.watch(colorController),
@@ -642,8 +655,8 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                               ),
                             )),
                         const SizedBox(height: 25),
-                        _textField('Please enter your age in years.', 'Age',
-                            age, unit),
+                        _textField(
+                            'Please enter your age in years.', 'Age', age),
                         const SizedBox(height: 25),
                         Container(
                             decoration: BoxDecoration(
@@ -666,12 +679,12 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                             )),
                         const SizedBox(height: 25),
                         _textField(
-                            unit == 1
-                                ? 'Please enter your weight in kgs.'
-                                : 'Please enter your weight in lbs.',
-                            'Weight',
-                            weight,
-                            unit),
+                          unit == 1
+                              ? 'Please enter your weight in kgs.'
+                              : 'Please enter your weight in lbs.',
+                          'Weight',
+                          weight,
+                        ),
                         const SizedBox(height: 25),
                         Container(
                           decoration: BoxDecoration(
@@ -703,7 +716,39 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                         ),
                         const SizedBox(height: 25),
                         _textField('Please enter the legal driving limit.',
-                            'Legal Limit', legalLimit, unit),
+                            'Legal Limit', legalLimit),
+                        const SizedBox(height: 25),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5.0),
+                            color: MyApp.themeNotifier.value == ThemeMode.light
+                                ? Colors.black.withOpacity(0.2)
+                                : Colors.white.withOpacity(0.2),
+                          ),
+                          height: 50,
+                          width: width - 32,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Stack(
+                              children: [
+                                Center(
+                                  child: Text(
+                                    "Buddy System",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displayMedium,
+                                  ),
+                                ),
+                                _infoIcon(
+                                    "Enter a trusted friend's phone # to give them updates as you drink.\n\nPartyPal will prompt you to send them a text message when you exceed the driving legal limit, enter the slow-down range, or surpass your limit.\n\nLeave this empty if you do not want to use this feature.",
+                                    6)
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 25),
+                        _textField('Please enter a valid 10 digit phone number',
+                            'PhoneNum', 0),
                         const SizedBox(height: 25),
                         Container(
                           decoration: BoxDecoration(
