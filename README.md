@@ -14,6 +14,11 @@ For college students, a grave issue in today's age is binge drinking. Many stude
   
   The user has the option to select from three settings: Light, Moderate, Heavy; all for different drinking occasions. The light mode will stop the user before their pass the legal driving limit, the Moderate mode will be used for most occasions, and the Heavy mode will stop the user before they enter levels where they may puke or black out.
 
+- Buddy System
+
+
+  The user has the option to input a friend's phone number when they use the app. When the user surpasses the driving legal limit or their maximum drinking limit, they will be prompted to send a pre-made text message to their friend informing them of their current state. 
+
 - Tolerance Scale
   
   As the user uses the app, they may find it may not be super accurate for them because everyone processes alcohol differently. To alleviate this, they can now adjust their own tolerance scale to adjust the recommendation setting to their own needs. The tolerance scale will allow for a 1-20% increase or decrease in their limit setting, and the user is responsible for adjusting this as they see fit. 
