@@ -720,6 +720,8 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       ref.read(bacController.notifier).stopTimer();
 
                       _deleteInfo();
+                      smsFlag1 = 0;
+                      smsFlag2 = 0;
                       //dispose();
                     },
                     child: Icon(
