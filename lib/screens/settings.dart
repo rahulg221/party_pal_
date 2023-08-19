@@ -742,7 +742,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                                 ),
                                 _infoIcon(
                                     "Enter a trusted friend's phone # to give them updates as you drink.\n\nPartyPal will prompt you to send them a text message when you exceed the driving legal limit or surpass your limit.\n\nLeave this empty if you do not want to use this feature.",
-                                    6)
+                                    12)
                               ],
                             ),
                           ),
