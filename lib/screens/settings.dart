@@ -529,6 +529,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
     int unit = ref.watch(unitController);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(widget.title,
             style: TextStyle(
