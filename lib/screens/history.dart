@@ -198,6 +198,7 @@ class _MyHistoryPageState extends ConsumerState<MyHistoryPage> {
         title: Text(
           widget.title,
         ),
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             icon: bac >= 0.08

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lift_links/helpers/sql_helper.dart';
 import 'package:lift_links/widgets/drive_alert.dart';
@@ -108,7 +107,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   }
 
   void _friendMessage() {
-    if (ref.watch(recipientController)[0] != '') {
+    /*if (ref.watch(recipientController)[0] != '') {
       if (ref.watch(colorController) == Colors.red.shade600) {
         if (smsFlag2 == 0) {
           _sendSMS('[PartyPal] Cut me off! I have surpassed my limit.',
@@ -124,7 +123,10 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           smsFlag1 = 1;
         }
       }
-    }
+    }*/
+    _sendSMS(
+        '[PartyPal] I am at ${ref.watch(countController)} drinks and my BAC is ${ref.watch(bacController)}.',
+        ref.watch(recipientController));
   }
 
   //Saves count/bac in database without accounting for time
@@ -499,8 +501,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
 
                       /* _saveInfo(
                           ref.watch(countController), ref.watch(bacController));*/
-
-                      _friendMessage();
                     } else {
                       _infoWarning(context);
                     }
@@ -814,6 +814,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           widget.title,
           style: TextStyle(fontFamily: fancyStyle, fontSize: 25),
         ),
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             icon: bac >= 0.08

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lift_links/widgets/disclaimer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../main.dart';
 import 'package:lift_links/helpers/providers.dart';
@@ -67,6 +68,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
     prefs.setInt('rec', 0);
     prefs.setDouble('tolerance', 0.8);
     prefs.setInt('unit', 0);
+    prefs.setInt('dflag', 0);
   }
 
   //Widget for selecting gender
@@ -540,6 +542,20 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
         actions: [
           IconButton(
             icon: const Icon(
+              Icons.error,
+            ),
+            iconSize: 25,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DisclaimerDialog(),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(
               Icons.refresh,
             ),
             iconSize: 25,
@@ -719,6 +735,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                         _textField('Please enter the legal driving limit.',
                             'Legal Limit', legalLimit),
                         const SizedBox(height: 25),
+                        /*
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5.0),
@@ -751,6 +768,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                         _textField('Please enter a valid 10 digit phone number',
                             'PhoneNum', 0),
                         const SizedBox(height: 25),
+                        */
                         Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5.0),

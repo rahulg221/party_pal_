@@ -4,9 +4,12 @@ import 'package:lift_links/screens/history.dart';
 import 'package:lift_links/screens/homepage.dart';
 import 'package:lift_links/helpers/providers.dart';
 import 'package:lift_links/helpers/theme_config.dart';
+import 'package:lift_links/widgets/disclaimer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
+
+int dFlag = 0;
 
 class LifeCycle extends ConsumerStatefulWidget {
   final Widget child;
@@ -62,9 +65,13 @@ class _LifeCycleState extends ConsumerState<LifeCycle>
   }
 }
 
-void main() {
+void main() async {
   //Sets app to always being in Portrait mode
   WidgetsFlutterBinding.ensureInitialized();
+
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  dFlag = prefs.getInt('dflag') ?? 0;
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
@@ -101,11 +108,9 @@ class MyApp extends ConsumerWidget {
             ),
             themeMode: currentMode,
             //Wrapped in LifeCycle
-            home: const LifeCycle(
-              child: MainPage(
-                title: 'Party Pal App',
-              ),
-            ),
+            home: dFlag == 0
+                ? DisclaimerDialog()
+                : MainPage(title: 'Party Pal App'),
           );
         });
   }

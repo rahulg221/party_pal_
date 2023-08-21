@@ -11,6 +11,7 @@ class UserSimplePreferences {
   static const _recKey = 'rec';
   static const _tolKey = 'tolerance';
   static const _unitKey = 'unit';
+  static const _dFlagKey = 'dflag';
 
   static Future<void> init() async {
     _preferences ??= await SharedPreferences.getInstance();
@@ -78,5 +79,13 @@ class UserSimplePreferences {
 
   static int? getUnit() {
     return _preferences?.getInt(_unitKey);
+  }
+
+  static Future<void> setDflag(int dFlag) async {
+    await _preferences?.setInt(_dFlagKey, dFlag);
+  }
+
+  static int? getDflag() {
+    return _preferences?.getInt(_dFlagKey);
   }
 }

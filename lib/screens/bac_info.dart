@@ -148,6 +148,7 @@ class _MyInfoPageState extends ConsumerState<MyInfoPage> {
         title: Text(
           widget.title,
         ),
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
             icon: bac >= 0.08
