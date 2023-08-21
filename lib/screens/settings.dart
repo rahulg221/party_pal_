@@ -542,9 +542,18 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
         actions: [
           IconButton(
             icon: const Icon(
-              Icons.error,
+              Icons.refresh,
             ),
             iconSize: 25,
+            onPressed: () {
+              resetInfo();
+            },
+          ),
+          IconButton(
+            icon: const Icon(
+              Icons.warning,
+            ),
+            iconSize: 23,
             onPressed: () {
               Navigator.push(
                 context,
@@ -552,15 +561,6 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
                   builder: (context) => DisclaimerDialog(),
                 ),
               );
-            },
-          ),
-          IconButton(
-            icon: const Icon(
-              Icons.refresh,
-            ),
-            iconSize: 25,
-            onPressed: () {
-              resetInfo();
             },
           ),
           IconButton(
