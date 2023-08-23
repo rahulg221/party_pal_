@@ -144,7 +144,7 @@ ThemeData createDarkTheme(Color textColor, double width, double height) {
       headlineMedium: TextStyle(
         fontSize: textScale * 3.2,
         fontWeight: FontWeight.bold,
-        color: Colors.white,
+        color: Color.fromARGB(255, 220, 220, 220),
         fontFamily: fontStyle,
       ),
       headlineSmall: TextStyle(
