@@ -283,28 +283,27 @@ class ColorNotifier extends StateNotifier<Color> {
       double bac, int recLevel, double legalLimit, double tolerance) {
     if (recLevel == 1) {
       if ((bac / (legalLimit - 0.02)) * 100 < 66) {
-        state = Colors.greenAccent.shade400;
+        state = Color.fromARGB(255, 72, 186, 131);
       } else if ((bac / (legalLimit - 0.02)) * 100 < 100) {
         state = Colors.yellowAccent.shade400;
       } else {
-        state = Colors.red.shade600;
+        state = Color.fromARGB(255, 199, 57, 54);
       }
     } else if (recLevel == 2) {
       if ((bac / (0.11 * tolerance)) * 100 < 66) {
-        state = Colors.greenAccent.shade400;
+        state = Color.fromARGB(255, 72, 186, 131);
       } else if ((bac / (0.11 * tolerance)) * 100 < 100) {
         state = Colors.yellowAccent.shade400;
       } else {
-        state = Colors.red.shade600;
+        state = Color.fromARGB(255, 199, 57, 54);
       }
     } else if (recLevel == 3) {
       if ((bac / (0.14 * tolerance)) * 100 < 66) {
-        state = Colors.greenAccent.shade400;
-        //bac/tolernace < 0.14
+        state = Color.fromARGB(255, 72, 186, 131);
       } else if ((bac / (0.14 * tolerance)) * 100 < 100) {
         state = Colors.yellowAccent.shade400;
       } else {
-        state = Colors.red.shade600;
+        state = Color.fromARGB(255, 199, 57, 54);
       }
     }
   }
