@@ -8,8 +8,6 @@ import 'package:lift_links/screens/settings.dart';
 import 'package:activity_ring/activity_ring.dart';
 import 'package:lift_links/helpers/theme_config.dart';
 import 'package:lift_links/helpers/providers.dart';
-import 'package:flutter_sms/flutter_sms.dart';
-import 'package:twilio_flutter/twilio_flutter.dart';
 
 class MyHomePage extends ConsumerStatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -25,8 +23,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   int ozLength = 3;
   int abvLength = 6;
   String listName = '';
-
-  late TwilioFlutter twilioFlutter;
 
   //Flags if sms for legal limit has been sent already
   int smsFlag1 = 0;
@@ -109,12 +105,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
     });
     print(result);
   }*/
-
-  void sendSms() async {
-    twilioFlutter.sendSMS(
-        toNumber: ' ************',
-        messageBody: 'Hii everyone this is a demo of\nflutter twilio sms.');
-  }
 
   void _friendMessage() {
     /*if (ref.watch(recipientController)[0] != '') {
