@@ -129,15 +129,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
         ref.watch(recipientController));
   }
 
-  //Saves count/bac in database without accounting for time
-  void _saveInfo(double count, double bac) async {
-    try {
-      await SQLHelper.saveInfo(count, bac);
-    } finally {
-      await SQLHelper.closeDatabase();
-    }
-  }
-
   //Loads in count and bac if app is closed
   void _loadInfo() async {
     try {
@@ -498,9 +489,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                       ref
                           .read(drinkController.notifier)
                           .logDrink(drinkType, abv, oz, DateTime.now());
-
-                      /* _saveInfo(
-                          ref.watch(countController), ref.watch(bacController));*/
                     } else {
                       _infoWarning(context);
                     }
@@ -676,9 +664,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                           localBac, recLevel, legalLimit, tolerance);
 
                       ref.read(drinkController.notifier).undoRecent();
-
-                      /* _saveInfo(
-                          ref.watch(countController), ref.watch(bacController));*/
                     },
                     child: Icon(
                       Icons.undo,

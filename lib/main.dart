@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lift_links/helpers/sql_helper.dart';
 import 'package:lift_links/screens/bac_info.dart';
 import 'package:lift_links/screens/history.dart';
 import 'package:lift_links/screens/homepage.dart';
@@ -26,6 +27,32 @@ class _LifeCycleState extends ConsumerState<LifeCycle>
   DateTime timePaused = DateTime.now();
   DateTime timeResumed = DateTime.now();
 
+  void _saveInfo(double count, double bac) async {
+    try {
+      await SQLHelper.saveInfo(count, bac);
+    } finally {
+      await SQLHelper.closeDatabase();
+    }
+  }
+
+  void _loadInfo() async {
+    try {
+      double bac = await SQLHelper.getBac();
+      double count = await SQLHelper.getCount();
+
+      ref.read(bacController.notifier).set(bac);
+      ref.read(countController.notifier).set(count);
+    } finally {
+      await SQLHelper.closeDatabase();
+    }
+
+    ref.read(colorController.notifier).changeColor(
+        ref.watch(bacController),
+        ref.watch(recController),
+        ref.watch(limitController),
+        ref.watch(tolController));
+  }
+
   @override
   void initState() {
     super.initState();
@@ -40,13 +67,20 @@ class _LifeCycleState extends ConsumerState<LifeCycle>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    double count = ref.watch(countController);
+    double bac = ref.watch(bacController);
+
     if (state == AppLifecycleState.paused) {
       timePaused = DateTime.now();
+      _saveInfo(count, bac);
       print('paused');
       ref.read(bacController.notifier).stopTimer();
     } else if (state == AppLifecycleState.resumed) {
       timeResumed = DateTime.now();
+      //Loads bac/count from db and saves time-updated version to ensure data doesn't disappear during long-term use while app is open
+      _loadInfo();
       ref.read(bacController.notifier).appResume(timePaused);
+
       ref.read(colorController.notifier).changeColor(
           ref.watch(bacController),
           ref.watch(recController),
@@ -109,8 +143,8 @@ class MyApp extends ConsumerWidget {
             themeMode: currentMode,
             //Wrapped in LifeCycle
             home: dFlag == 0
-                ? DisclaimerDialog()
-                : MainPage(title: 'Party Pal App'),
+                ? const DisclaimerDialog()
+                : const MainPage(title: 'Party Pal App'),
           );
         });
   }
@@ -146,6 +180,8 @@ class _MainPageState extends ConsumerState<MainPage> {
     const MyInfoPage(title: 'BAC Information'),
   ];
 
+  //Loads in count and bac if app is closed
+
   _loadApp() async {
     //Loads in values from shared preferences into variables
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -167,7 +203,6 @@ class _MainPageState extends ConsumerState<MainPage> {
     ref.read(recController.notifier).setRec(recLevel);
     ref.read(tolController.notifier).setTol(tolerance);
     ref.read(unitController.notifier).setUnit(unit);
-    ref.read(recipientController.notifier).setRecipient(['']);
 
     if (themeFlag == 1) {
       MyApp.themeNotifier.value = ThemeMode.light;

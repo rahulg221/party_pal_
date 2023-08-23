@@ -51,6 +51,14 @@ class SQLHelper {
     }
   }
 
+  static Future<void> saveDrink(String type, double abv, double oz) async {
+    final db = await SQLHelper.openDatabase();
+
+    final data = {'type': type, 'abv': abv, 'oz': oz};
+
+    await db.insert('drinks', data);
+  }
+
   static Future<double> getCount() async {
     final db = await SQLHelper.openDatabase();
     final result = await db.query('info', columns: ['count'], limit: 1);

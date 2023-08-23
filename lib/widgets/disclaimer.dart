@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lift_links/helpers/providers.dart';
+
 import 'package:lift_links/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DisclaimerDialog extends StatelessWidget {
+  const DisclaimerDialog({super.key});
+
   @override
   Widget build(BuildContext context) {
     return FractionallySizedBox(
       alignment: Alignment.center,
       widthFactor: 1.1,
       child: Padding(
-        padding: EdgeInsets.only(top: 30),
+        padding: const EdgeInsets.only(top: 30),
         child: AlertDialog(
-          title: Text("Disclaimer",
+          title: const Text("Disclaimer",
               style:
                   TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
-          content: SingleChildScrollView(
+          content: const SingleChildScrollView(
             child: Text(
               "PartyPal is designed to provide general information and guidance regarding Blood Alcohol Concentration (BAC) levels and responsible drinking behavior. While the app may offer valuable insights and suggestions, it is imperative to recognize that it is not a substitute for professional medical advice, legal counsel, or individual judgment. Users are urged to exercise discretion and common sense when interpreting the app's recommendations and utilizing its features.\n\n"
               "1. BAC Accuracy and Variability:\n"
@@ -41,7 +42,7 @@ class DisclaimerDialog extends StatelessWidget {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text("I Understand and Agree",
+              child: const Text("I Understand and Agree",
                   style: TextStyle(
                       color: Colors.black, fontWeight: FontWeight.bold)),
               onPressed: () async {
@@ -52,7 +53,7 @@ class DisclaimerDialog extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => LifeCycle(
+                    builder: (context) => const LifeCycle(
                       child: MainPage(
                         title: 'Party Pal App',
                       ),

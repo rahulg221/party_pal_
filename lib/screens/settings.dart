@@ -558,7 +558,7 @@ class _MySettingsPageState extends ConsumerState<MySettingsPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => DisclaimerDialog(),
+                  builder: (context) => const DisclaimerDialog(),
                 ),
               );
             },
