@@ -18,17 +18,27 @@ class Drink {
 
 class CountNotifier extends StateNotifier<double> {
   CountNotifier() : super(0);
+  List<double> recentOz = List<double>.filled(20, 0.0);
+  List<double> recentAbv = List<double>.filled(20, 0.0);
+  int x = 0;
 
-  //Adds drink
+  // Adds drink
   double addDrink(double abv, double oz) {
-    state = state + (abv / 100 * oz) / 0.6;
+    if (x < 20) {
+      recentAbv[x] = abv;
+      recentOz[x] = oz;
+      state = state + (abv / 100 * oz) / 0.6;
+
+      x++;
+    }
     return state;
   }
 
-  //Removes most recent drink
-  double undoDrink(double abv, double oz) {
-    if (state - (abv / 100 * oz) / 0.6 >= 0) {
-      state = state - (abv / 100 * oz) / 0.6;
+  // Removes most recent drink
+  double undoDrink() {
+    if (x > 0) {
+      x--;
+      state = state - (recentAbv[x] / 100 * recentOz[x]) / 0.6;
     } else {
       state = 0;
     }
@@ -46,7 +56,11 @@ class CountNotifier extends StateNotifier<double> {
 
   //Resets count to 0
   double reset() {
+    recentOz = List<double>.filled(20, 0.0);
+    recentAbv = List<double>.filled(20, 0.0);
+
     state = 0;
+    x = 0;
     return state;
   }
 }

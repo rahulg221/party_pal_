@@ -9,6 +9,7 @@ import 'package:activity_ring/activity_ring.dart';
 import 'package:lift_links/helpers/theme_config.dart';
 import 'package:lift_links/helpers/providers.dart';
 import 'package:flutter_sms/flutter_sms.dart';
+import 'package:twilio_flutter/twilio_flutter.dart';
 
 class MyHomePage extends ConsumerStatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -24,6 +25,8 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   int ozLength = 3;
   int abvLength = 6;
   String listName = '';
+
+  late TwilioFlutter twilioFlutter;
 
   //Flags if sms for legal limit has been sent already
   int smsFlag1 = 0;
@@ -98,12 +101,19 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
 
   //Sends text message to specified recipients
   //Note: need to download from flutter sms repo and manually set path in pubspec.yaml
+  /*
   void _sendSMS(String message, List<String> recipents) async {
     String result = await sendSMS(message: message, recipients: recipents)
         .catchError((onError) {
       print(onError);
     });
     print(result);
+  }*/
+
+  void sendSms() async {
+    twilioFlutter.sendSMS(
+        toNumber: ' ************',
+        messageBody: 'Hii everyone this is a demo of\nflutter twilio sms.');
   }
 
   void _friendMessage() {
@@ -123,10 +133,10 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
           smsFlag1 = 1;
         }
       }
-    }*/
+    }
     _sendSMS(
         '[PartyPal] I am at ${ref.watch(countController)} drinks and my BAC is ${ref.watch(bacController)}.',
-        ref.watch(recipientController));
+        ref.watch(recipientController)); */
   }
 
   //Loads in count and bac if app is closed
@@ -175,7 +185,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   void initState() {
     //Loads in count/bac and changes color
     //_loadInfo();
-
     super.initState();
   }
 
@@ -654,7 +663,8 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                     ),
                     onPressed: () {
                       double localc =
-                          ref.read(countController.notifier).undoDrink(abv, oz);
+                          ref.read(countController.notifier).undoDrink();
+
                       ref.read(bacController.notifier).updateBac(
                           weight, genderVal, localc, ref.watch(unitController));
 
