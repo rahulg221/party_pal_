@@ -27,7 +27,10 @@ class _LifeCycleState extends ConsumerState<LifeCycle>
   DateTime timePaused = DateTime.now();
   DateTime timeResumed = DateTime.now();
 
-  void _saveInfo(double count, double bac) async {
+  void _saveInfo() async {
+    double count = ref.watch(countController);
+    double bac = ref.watch(bacController);
+
     try {
       await SQLHelper.saveInfo(count, bac);
     } finally {
@@ -41,6 +44,8 @@ class _LifeCycleState extends ConsumerState<LifeCycle>
       double count = await SQLHelper.getCount();
 
       ref.read(bacController.notifier).set(bac);
+      ref.read(bacController.notifier).appResume(timePaused);
+
       ref.read(countController.notifier).set(count);
     } finally {
       await SQLHelper.closeDatabase();
@@ -67,26 +72,25 @@ class _LifeCycleState extends ConsumerState<LifeCycle>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    double count = ref.watch(countController);
-    double bac = ref.watch(bacController);
-
     if (state == AppLifecycleState.paused) {
-      timePaused = DateTime.now();
-      _saveInfo(count, bac);
       print('paused');
+      timePaused = DateTime.now();
+      _saveInfo();
       ref.read(bacController.notifier).stopTimer();
     } else if (state == AppLifecycleState.resumed) {
       timeResumed = DateTime.now();
+      print('resumed');
+
       //Loads bac/count from db and saves time-updated version to ensure data doesn't disappear during long-term use while app is open
       _loadInfo();
-      ref.read(bacController.notifier).appResume(timePaused);
+      //ref.read(bacController.notifier).appResume(timePaused);
 
       ref.read(colorController.notifier).changeColor(
           ref.watch(bacController),
           ref.watch(recController),
           ref.watch(limitController),
           ref.watch(tolController));
-      print('resumed');
+
       ref.read(bacController.notifier).startTimer();
     } else if (state == AppLifecycleState.detached) {
       print('closed');
@@ -144,7 +148,11 @@ class MyApp extends ConsumerWidget {
             //Wrapped in LifeCycle
             home: dFlag == 0
                 ? const DisclaimerDialog()
-                : const MainPage(title: 'Party Pal App'),
+                : const LifeCycle(
+                    child: MainPage(
+                      title: 'Party Pal App',
+                    ),
+                  ),
           );
         });
   }

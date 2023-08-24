@@ -382,6 +382,16 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   ),
                   content: Column(
                     children: [
+                      Center(
+                        child: Container(
+                          width: 40,
+                          height: 4,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                        ),
+                      ),
                       Align(
                         alignment: Alignment.topRight,
                         child: IconButton(
@@ -399,7 +409,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                               fontWeight: FontWeight.bold)),
                     ],
                   ),
-                  backgroundColor: ref.watch(colorController).withOpacity(0.85),
+                  backgroundColor: ref.watch(colorController),
                 );
 
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);

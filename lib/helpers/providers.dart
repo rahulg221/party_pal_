@@ -117,6 +117,7 @@ class BacNotifier extends StateNotifier<double> {
 
   //Updates bac for time elapsed from when it goes into hide and its resumed
   void appResume(DateTime timePaused) {
+    print('paused at $timePaused');
     double newBac = 0.0;
 
     DateTime currentTime = DateTime.now();
