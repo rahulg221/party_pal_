@@ -12,6 +12,7 @@ class UserSimplePreferences {
   static const _tolKey = 'tolerance';
   static const _unitKey = 'unit';
   static const _dFlagKey = 'dflag';
+  static const _tPausedKey = 'tpaused';
 
   static Future<void> init() async {
     _preferences ??= await SharedPreferences.getInstance();

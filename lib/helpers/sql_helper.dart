@@ -16,6 +16,7 @@ class SQLHelper {
     await db.execute('''CREATE TABLE info(
         count REAL,
         bac REAL
+        timePaused TIMESTAMP
       )
       ''');
   }
@@ -24,9 +25,15 @@ class SQLHelper {
   static Future<sql.Database> openDatabase() async {
     return sql.openDatabase(
       'history.db',
-      version: 1,
-      onCreate: (sql.Database db, int version) async {
+      version: 6, // Increment the version number
+      onCreate: (db, version) async {
         await createTables(db);
+      },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 6) {
+          await db.execute('ALTER TABLE info ADD COLUMN timePaused TIMESTAMP');
+        }
+        // You can add more upgrade steps for other versions if needed
       },
     );
   }
@@ -36,10 +43,15 @@ class SQLHelper {
     await db.close();
   }
 
-  static Future<void> saveInfo(double count, double bac) async {
+  static Future<void> saveInfo(
+      double count, double bac, DateTime timePaused) async {
     final db = await SQLHelper.openDatabase();
 
-    final data = {'count': count, 'bac': bac};
+    final data = {
+      'count': count,
+      'bac': bac,
+      'timePaused': timePaused.toUtc().toIso8601String()
+    };
     final existingInfo = await db.query('info');
 
     if (existingInfo.isNotEmpty) {
@@ -79,6 +91,20 @@ class SQLHelper {
     } else {
       return 0.0; // No data found
     }
+  }
+
+  static Future<DateTime?> getTimePaused() async {
+    final db = await SQLHelper.openDatabase();
+    final result = await db.query('info', columns: ['timePaused'], limit: 1);
+
+    if (result.isNotEmpty) {
+      final timestamp = result.first['timePaused'] as String?;
+      if (timestamp != null) {
+        return DateTime.parse(timestamp);
+      }
+    }
+
+    return null; // No data found
   }
 
   static Future<void> deleteInfo() async {

@@ -32,7 +32,7 @@ class _LifeCycleState extends ConsumerState<LifeCycle>
     double bac = ref.watch(bacController);
 
     try {
-      await SQLHelper.saveInfo(count, bac);
+      await SQLHelper.saveInfo(count, bac, timePaused);
     } finally {
       await SQLHelper.closeDatabase();
     }
@@ -42,9 +42,13 @@ class _LifeCycleState extends ConsumerState<LifeCycle>
     try {
       double bac = await SQLHelper.getBac();
       double count = await SQLHelper.getCount();
+      DateTime _timePaused =
+          await SQLHelper.getTimePaused() ?? DateTime.now(); // Load timePaused
 
+      print('db time pause: $_timePaused');
+      print('local time pause: $timePaused');
       ref.read(bacController.notifier).set(bac);
-      ref.read(bacController.notifier).appResume(timePaused);
+      ref.read(bacController.notifier).appResume(_timePaused);
 
       ref.read(countController.notifier).set(count);
     } finally {
