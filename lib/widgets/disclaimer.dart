@@ -63,7 +63,7 @@ class DisclaimerDialog extends StatelessWidget {
               },
             ),
           ],
-          backgroundColor: Colors.greenAccent.shade400,
+          backgroundColor: Color.fromARGB(255, 72, 186, 131),
         ),
       ),
     );
