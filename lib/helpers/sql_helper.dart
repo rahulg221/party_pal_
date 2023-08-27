@@ -50,7 +50,7 @@ class SQLHelper {
     final data = {
       'count': count,
       'bac': bac,
-      'timePaused': timePaused.toUtc().toIso8601String()
+      'timePaused': timePaused.toLocal().toIso8601String()
     };
     final existingInfo = await db.query('info');
 
