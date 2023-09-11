@@ -7,11 +7,14 @@ For college students, a grave issue in today's age is binge drinking. Many stude
 ## Features
 - Color-coded ring recommendation system
   
-  As the user inputs drinks, a color-changing ring will show them the percentage of their set limit they have consumed. The ring will display as green when the user can take more drinks, yellow as the user approaches their limit, and red if the user surpasses the limit. The limit is based upon their recommendation setting, tolerance scale, and personal stats. The ring percentage and color will also adjust as time passes, allowing the user to always have an idea of where they are limit-wise at any given time. The user is also able to view their # of standard drinks at any time. 
+  As the user inputs drinks, a color-changing ring will show them the percentage of their set limit they have consumed. The ring will display as green when the user can take more drinks, yellow as the user approaches their limit, and red if the user surpasses the limit. The limit is based upon their recommendation setting, tolerance scale, and personal stats. The ring percentage and color will also adjust as time passes, allowing the user to always have an idea of where they are limit-wise at any given time. The user is also able to view their # of standard drinks at any time.
+
+- Buddy System (IN PROGRESS)
+
+  The user has the option to enter a friend's phone number and allow them to receive alerts. The alerts will send their friend the user's drink count, BAC, a brief message on the user's current state, and their location. These alerts will be sent when the user surpasses the legal limit, enters the slow-down zone, and surpasses their maximum BAC level.
 
 - Occasion-based Recommendation Settings
 
-  
   The user has the option to select from three settings: Light, Moderate, Heavy; all for different drinking occasions. The light mode will stop the user before their pass the legal driving limit, the Moderate mode will be used for most occasions, and the Heavy mode will stop the user before they enter levels where they may puke or black out.
 
 - Tolerance Scale
